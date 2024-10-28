@@ -25,6 +25,7 @@ namespace Inventory_Management.Common.Middlewares
                 {
                     await _next(context);
                     transaction.Commit();
+                   await _context.SaveChangesAsync();
                 }
                 catch (Exception ex)
                 {
