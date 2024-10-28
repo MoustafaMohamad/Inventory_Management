@@ -1,4 +1,5 @@
-﻿using Inventory_Management.Common;
+﻿using Common.Helpers;
+using Inventory_Management.Common;
 using Inventory_Management.Common.Helpers;
 using Inventory_Management.Entities;
 using Inventory_Management.Features.Common.Users.Queries;
@@ -21,12 +22,12 @@ namespace Inventory_Management.Features.Users.ForgetPassword.Commands
             {
                 return ResultDto<bool>.Faliure(userResult.ErrorCode, userResult.Message);
             }
-            var user = userResult.Data;
+            var user = userResult.Data.MapOne<User>();     
             var otpCode = OTPGenerator.GenerateOTP();
             user.OtpCode = otpCode;
             user.OtpExpiry = DateTime.UtcNow.AddMinutes(15);
-            _repository.Update(user);
-            _repository.SaveChanges();
+           await  _repository.Update(user);
+           await  _repository.SaveChanges();
             ////send email with otp
             //EmailHelper.SendEmail(user.Email, "OTP", otpCode);
             return ResultDto<bool>.Sucess(true, "OTP Had been sent to your Email");
