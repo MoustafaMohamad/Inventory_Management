@@ -1,4 +1,14 @@
 
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
+using Common;
+using Common.Helpers;
+using Inventory_Management.Common;
+using Inventory_Management.Common.Profiles;
+using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace Inventory_Management
 {
     public class Program
@@ -14,6 +24,20 @@ namespace Inventory_Management
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            #region AutoFac
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+                builder.RegisterModule(new AutoFacModule()));
+            #endregion
+
+            #region AutoMapper
+            builder.Services.AddAutoMapper(typeof(UserProfile));
+            #endregion
+
+            #region MediatR
+            builder.Services.AddMediatR(typeof(Program).Assembly);
+            #endregion
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -27,7 +51,7 @@ namespace Inventory_Management
 
             app.UseAuthorization();
 
-
+            MapperHelper.Mapper = app.Services.GetService<IMapper>();
             app.MapControllers();
 
             app.Run();
