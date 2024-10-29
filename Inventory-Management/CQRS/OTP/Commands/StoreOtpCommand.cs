@@ -20,7 +20,7 @@ namespace Inventory_Management.CQRS.OTP.Commands
         {
         }
 
-        public override Task<bool> Handle(StoreOtpCommand request, CancellationToken cancellationToken)
+        public override async Task<bool> Handle(StoreOtpCommand request, CancellationToken cancellationToken)
         {
             
              var otpVerification = new OtpVerification
@@ -31,11 +31,11 @@ namespace Inventory_Management.CQRS.OTP.Commands
                  ExpiryTime = DateTime.UtcNow.AddMinutes(15) // OTP expires after 15 minutes
              };
 
-            _repository.Add(otpVerification);
+           await _repository.AddAsync(otpVerification);
 
             //_repository.SaveChanges();
 
-            return Task.FromResult(true);
+            return true;
         }
     }
     
