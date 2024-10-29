@@ -17,7 +17,7 @@ namespace Inventory_Management.Features.Users.ChangePassword
             _mediator = mediator;
         }
         [HttpPost]
-        public async Task<IActionResult> ForgetPasswordAsync(ChangePasswordEndPointRequest request)
+        public async Task<IActionResult> ChangePasswordAsync(ChangePasswordEndPointRequest request)
         {
             var result = await _mediator.Send(request.MapOne<ChangePasswordCommand>());
             if (!result.IsSuccess)
