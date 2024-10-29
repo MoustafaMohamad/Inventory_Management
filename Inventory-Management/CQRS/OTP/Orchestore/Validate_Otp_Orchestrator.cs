@@ -32,7 +32,6 @@ namespace Inventory_Management.CQRS.OTP.Orchestore
 
             await _mediator.Send(new RemoveOtpCommand(otpEntry));
 
-            _repository.SaveChanges();
             return true;
         }
 

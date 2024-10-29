@@ -29,7 +29,7 @@ namespace Inventory_Management.CQRS.Users.Commands
            await _repository.AddAsync(user);
 
 
-            //_repository.SaveChanges();
+           
 
             return true;
         }

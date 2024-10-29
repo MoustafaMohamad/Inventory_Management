@@ -37,7 +37,7 @@ namespace Inventory_Management.CQRS.Users.Orchestrator
             }
             user.IsActive = true;
 
-            _repository.SaveChanges();
+           
             return true;
         }
 
