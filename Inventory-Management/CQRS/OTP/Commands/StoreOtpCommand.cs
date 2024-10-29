@@ -31,7 +31,9 @@ namespace Inventory_Management.CQRS.OTP.Commands
                  ExpiryTime = DateTime.UtcNow.AddMinutes(15) // OTP expires after 15 minutes
              };
 
+
            await _repository.AddAsync(otpVerification);
+
 
             //_repository.SaveChanges();
 
