@@ -17,6 +17,7 @@ namespace Inventory_Management.Features.Users.ForgetPassword
         {
             _mediator = mediator;
         }
+
         public async Task<IActionResult> ForgetPasswordAsync(ForgetPasswordEndPointRequest request)
         {
             var result =await  _mediator.Send(request.MapOne<ForgetPasswordCommand>());
