@@ -5,7 +5,7 @@ namespace Inventory_Management.Common.Repositories
 {
     public interface IRepository<T> where T : BaseModel 
     {
-        T Add(T entity);
+        Task AddAsync(T entity); 
         Task Update(T entity);
         void Delete(T entity);
         void Delete(int id);

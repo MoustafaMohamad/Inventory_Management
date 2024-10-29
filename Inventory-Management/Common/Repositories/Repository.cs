@@ -13,10 +13,11 @@ namespace Inventory_Management.Common.Repositories
         {
             _context = context;
         }
-
-        public T Add(T entity)
+        
+        public async Task AddAsync(T entity)
         {
-            throw new NotImplementedException();
+           await _context.Set<T>().AddAsync(entity);
+           
         }
 
         public bool Any(Expression<Func<T, bool>> predicate)
@@ -64,5 +65,6 @@ namespace Inventory_Management.Common.Repositories
         {
              _context.Update(entity);
         }
+
     }
 }
