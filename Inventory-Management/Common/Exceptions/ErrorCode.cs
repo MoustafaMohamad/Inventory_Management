@@ -6,5 +6,7 @@
         UnKnown,
         // USER
         EmailIsNotFound,
+        WrongPassword,
+        PasswordsDontMatch
     }
 }

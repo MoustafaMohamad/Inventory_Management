@@ -4,10 +4,8 @@ using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Common;
 using Common.Helpers;
-using Inventory_Management.Common;
 using Inventory_Management.Common.Profiles;
 using MediatR;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Inventory_Management
 {
