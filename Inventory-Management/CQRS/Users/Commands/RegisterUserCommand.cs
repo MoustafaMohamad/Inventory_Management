@@ -26,7 +26,8 @@ namespace Inventory_Management.CQRS.Users.Commands
                 IsActive = false
             };
 
-            await _repository.AddAsync(user);
+           await _repository.AddAsync(user);
+
 
             //_repository.SaveChanges();
 
