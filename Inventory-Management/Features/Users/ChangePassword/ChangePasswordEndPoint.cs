@@ -1,25 +1,25 @@
 ﻿using Common.Helpers;
 using Inventory_Management.Common.Exceptions;
 using Inventory_Management.Common.Helpers.ResultViewModel;
-using Inventory_Management.Features.Users.ResetPassword.Commands;
+using Inventory_Management.Features.Users.ChangePassword.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Inventory_Management.Features.Users.ResetPassword
+namespace Inventory_Management.Features.Users.ChangePassword
 {
     [ApiController]
     [Route("[controller]")]
-    public class ResetPasswordEndPoint : ControllerBase
+    public class ChangePasswordEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;
-        public ResetPasswordEndPoint(IMediator mediator)
+        public ChangePasswordEndPoint(IMediator mediator)
         {
             _mediator = mediator;
         }
         [HttpPost]
-        public async Task<IActionResult> ResetPasswordAsync(ResetPasswordEndPointRequest request)
+        public async Task<IActionResult> ChangePasswordAsync(ChangePasswordEndPointRequest request)
         {
-            var result = await _mediator.Send(request.MapOne<ResetPasswordCommand>());
+            var result = await _mediator.Send(request.MapOne<ChangePasswordCommand>());
             if (!result.IsSuccess)
             {
                 throw new BusinessException(result.ErrorCode, result.Message);
