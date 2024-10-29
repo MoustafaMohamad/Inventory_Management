@@ -3,6 +3,8 @@
     public enum ErrorCode
     {
         None ,
-        UnKnown
+        UnKnown,
+        // USER
+        EmailIsNotFound,
     }
 }
