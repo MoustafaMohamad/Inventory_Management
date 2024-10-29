@@ -16,7 +16,7 @@ namespace Inventory_Management.CQRS.Users.Commands
         {
         }
 
-        public override Task<bool> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
+        public override async Task<bool> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
         {
 
             var user = new User
@@ -26,11 +26,11 @@ namespace Inventory_Management.CQRS.Users.Commands
                 IsActive = false
             };
 
-            _repository.Add(user);
+            await _repository.AddAsync(user);
 
             //_repository.SaveChanges();
 
-            return Task.FromResult(true);
+            return true;
         }
     }
 }
