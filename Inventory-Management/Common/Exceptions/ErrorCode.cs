@@ -7,6 +7,11 @@
         // USER
         EmailIsNotFound,
         WrongPassword,
-        PasswordsDontMatch
+        PasswordsDontMatch,
+        EmailAlreadyExist,
+        UserNameAlreadyExist,
+        WrongPasswordOrEmail,
+        UnableTogenerateToken,
+        RoleNotFound
     }
 }

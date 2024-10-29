@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Net.Mail;
 using System.Net;
 using System.Text;
+using DotNetEnv;
 
 namespace Inventory_Management
 {
@@ -20,7 +21,8 @@ namespace Inventory_Management
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
+            //Enviroment
+            Env.Load();
             // Add services to the container.
             builder.Services.AddFluentEmail("maim6349@gmail.com")
            .AddRazorRenderer()  // or AddLiquidRenderer() if you want to use Liquid templates
@@ -65,10 +67,10 @@ namespace Inventory_Management
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
+                        ValidIssuer = Environment.GetEnvironmentVariable("ISSUER"),
+                        ValidAudience = Environment.GetEnvironmentVariable("AUDIENCE"),
                         ValidateIssuerSigningKey = true,
-                        ValidIssuer = "UpSkilling",
-                        ValidAudience = "UpSkilling-Users",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.SecretKey))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("SECRET_KEY")))
                     };
                 });
             #endregion

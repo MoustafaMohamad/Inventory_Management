@@ -20,7 +20,6 @@ namespace Inventory_Management.CQRS.OTP.Orchestore
         public Validate_Otp_OrchestratorHandler(RequestParameters<OtpVerification> requestParameters) : base(requestParameters)
         {
         }
-
         public async override Task<bool> Handle(Validate_Otp_Orchestrator request, CancellationToken cancellationToken)
         {
             var otpEntry = await _mediator.Send(new GetOtpQuery( request.email, request.otp));

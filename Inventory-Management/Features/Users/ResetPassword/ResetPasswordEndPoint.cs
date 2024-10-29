@@ -17,7 +17,7 @@ namespace Inventory_Management.Features.Users.ResetPassword
             _mediator = mediator;
         }
         [HttpPost]
-        public async Task<IActionResult> ResetPasswordAsync(ResetPasswordEndPointRequest request)
+        public async Task<IActionResult> ResetPasswordAsync([FromBody] ResetPasswordEndPointRequest request)
         {
             var result = await _mediator.Send(request.MapOne<ResetPasswordCommand>());
             if (!result.IsSuccess)

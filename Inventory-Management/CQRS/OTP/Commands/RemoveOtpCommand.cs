@@ -6,11 +6,6 @@ using static System.Net.WebRequestMethods;
 
 namespace Inventory_Management.CQRS.OTP.Commands
 {
-
-
-
-
-
     
         public record RemoveOtpCommand( OtpVerification otp) : IRequest<bool>;
 
