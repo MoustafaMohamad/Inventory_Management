@@ -1,6 +1,6 @@
 ﻿namespace Inventory_Management.Entities
 {
-    public class Admin
+    public class Admin :BaseModel
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }

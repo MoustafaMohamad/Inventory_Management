@@ -2,7 +2,7 @@
 {
     public enum ErrorCode
     {
-        None ,
+        None,
         UnKnown,
         // USER
         EmailIsNotFound,

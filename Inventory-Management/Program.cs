@@ -4,8 +4,12 @@ using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Common;
 using Common.Helpers;
+using Inventory_Management.Common;
 using Inventory_Management.Common.Profiles;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Inventory_Management
 {
@@ -38,6 +42,29 @@ namespace Inventory_Management
 
             #endregion
 
+
+            #region Authentication 
+            builder.Services.AddAuthentication(opt => {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = "UpSkilling",
+                        ValidAudience = "UpSkilling-Users",
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Constants.SecretKey))
+                    };
+                });
+            #endregion
+
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -48,7 +75,7 @@ namespace Inventory_Management
             }
 
             app.UseHttpsRedirection();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             MapperHelper.Mapper = app.Services.GetService<IMapper>();
