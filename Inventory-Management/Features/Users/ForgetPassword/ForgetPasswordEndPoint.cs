@@ -1,4 +1,4 @@
-﻿
+
 using Common.Helpers;
 using Inventory_Management.Common.Exceptions;
 using Inventory_Management.Common.Helpers.ResultViewModel;
@@ -18,6 +18,7 @@ namespace Inventory_Management.Features.Users.ForgetPassword
             _mediator = mediator;
         }
 
+        [HttpPost]
         public async Task<IActionResult> ForgetPasswordAsync(ForgetPasswordEndPointRequest request)
         {
             var result =await  _mediator.Send(request.MapOne<ForgetPasswordCommand>());
