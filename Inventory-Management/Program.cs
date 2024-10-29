@@ -35,7 +35,9 @@ namespace Inventory_Management
             #endregion
 
             #region MediatR
-            builder.Services.AddMediatR(typeof(Program).Assembly);
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+
             #endregion
 
             var app = builder.Build();
