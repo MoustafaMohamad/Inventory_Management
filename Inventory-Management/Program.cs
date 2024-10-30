@@ -14,6 +14,9 @@ using System.Net;
 using System.Text;
 using DotNetEnv;
 using Inventory_Management.Common.Middlewares;
+using Hangfire;
+using Hangfire.SqlServer;
+using Inventory_Management.Features.Common.BackGround_jobs;
 
 namespace Inventory_Management
 {
@@ -34,6 +37,27 @@ namespace Inventory_Management
                EnableSsl = true,
                Port = 587
            });
+
+
+
+
+            builder.Services.AddHangfire(configuration =>
+           configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                        .UseSimpleAssemblyNameTypeSerializer()
+                        .UseRecommendedSerializerSettings()
+                        .UseSqlServerStorage("Server=.;Database=Test22;Trusted_Connection=True;Encrypt=False;",
+                                             new SqlServerStorageOptions
+                                             {
+                                                 CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                                                 SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                                                 QueuePollInterval = TimeSpan.Zero,
+                                                 UseRecommendedIsolationLevel = true,
+                                                 DisableGlobalLocks = true
+                                             }));
+
+            // Add Hangfire Server
+            builder.Services.AddHangfireServer();
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -86,7 +110,14 @@ namespace Inventory_Management
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-             
+
+
+            // Use Hangfire dashboard for monitoring jobs
+            app.UseHangfireDashboard("/hangfire");
+
+            // Register the recurring job
+            RecurringJob.AddOrUpdate<SampleJob>(job => job.ExecuteJob(), Cron.Minutely);
+
             app.UseHttpsRedirection();
             app.UseMiddleware<GlobalErrorHandlerMiddleware>();
             app.UseMiddleware<TransactionMiddleware>();

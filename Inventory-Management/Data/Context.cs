@@ -27,7 +27,7 @@ namespace Inventory_Management.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             
-            optionsBuilder.UseSqlServer("Server =MSI\\SQLEXPRESS; Database = Inventory_Management; Trusted_Connection = True; TrustServerCertificate = True;")
+            optionsBuilder.UseSqlServer("Server=.;Database=Test22;Trusted_Connection=True;Encrypt=False;")
                 .LogTo(log => Debug.WriteLine(log), LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
