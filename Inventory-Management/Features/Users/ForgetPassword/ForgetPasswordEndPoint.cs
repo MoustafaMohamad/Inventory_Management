@@ -2,7 +2,7 @@
 using Common.Helpers;
 using Inventory_Management.Common.Exceptions;
 using Inventory_Management.Common.Helpers.ResultViewModel;
-using Inventory_Management.Features.Users.ForgetPassword.Commands;
+using Inventory_Management.Features.Users.ForgetPassword.Orchestrators;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +19,9 @@ namespace Inventory_Management.Features.Users.ForgetPassword
         }
 
         [HttpPost]
-        public async Task<IActionResult> ForgetPasswordAsync(ForgetPasswordEndPointRequest request)
+        public async Task<IActionResult> ForgetPasswordAsync([FromBody] ForgetPasswordEndPointRequest request)
         {
-            var result =await  _mediator.Send(request.MapOne<ForgetPasswordCommand>());
+            var result =await  _mediator.Send(request.MapOne<ForgetPasswordOrchestrator>());
             if (!result.IsSuccess)
             {
                 throw new BusinessException(result.ErrorCode,result.Message);
