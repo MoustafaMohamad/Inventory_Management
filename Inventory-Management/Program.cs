@@ -17,7 +17,10 @@ using Inventory_Management.Common.Middlewares;
 using Hangfire;
 using Hangfire.SqlServer;
 using Inventory_Management.Features.Common.BackGround_jobs;
-
+using Microsoft.AspNetCore.RateLimiting;
+using System.Threading.RateLimiting;
+using Microsoft.Extensions.Configuration;
+using AspNetCoreRateLimit;
 namespace Inventory_Management
 {
     public class Program
@@ -25,8 +28,30 @@ namespace Inventory_Management
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+
+
+            #region rate limit
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+
+            builder.Services.Configure<IpRateLimitOptions>(configuration.GetSection("IpRateLimiting"));
+            builder.Services.AddInMemoryRateLimiting();
+
+            // Register MemoryCache to resolve IMemoryCache
+            builder.Services.AddMemoryCache();
+
+            // Register rate limiting services
+            builder.Services.AddSingleton<IRateLimitCounterStore, MemoryCacheRateLimitCounterStore>();
+            builder.Services.AddSingleton<IProcessingStrategy, AsyncKeyLockProcessingStrategy>();
+            builder.Services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
+
+            #endregion
+
             //Enviroment
             Env.Load();
+
+            #region mail
+
             // Add services to the container.
             builder.Services.AddFluentEmail("maim6349@gmail.com")
            .AddRazorRenderer()  // or AddLiquidRenderer() if you want to use Liquid templates
@@ -38,9 +63,9 @@ namespace Inventory_Management
                Port = 587
            });
 
+            #endregion
 
-
-
+            #region hangfire
             builder.Services.AddHangfire(configuration =>
            configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                         .UseSimpleAssemblyNameTypeSerializer()
@@ -57,7 +82,7 @@ namespace Inventory_Management
 
             // Add Hangfire Server
             builder.Services.AddHangfireServer();
-
+            #endregion
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -103,6 +128,7 @@ namespace Inventory_Management
 
 
             var app = builder.Build();
+            app.UseIpRateLimiting();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
@@ -122,10 +148,14 @@ namespace Inventory_Management
             app.UseMiddleware<GlobalErrorHandlerMiddleware>();
             app.UseMiddleware<TransactionMiddleware>();
             app.UseAuthentication();
-            app.UseAuthorization();
+            //app.UseRateLimiter();
 
+            app.UseAuthorization();
+            // Apply Rate Limiting Globally
             MapperHelper.Mapper = app.Services.GetService<IMapper>();
             app.MapControllers();
+            //app.MapControllers().RequireRateLimiting("PerMinutePolicy");
+            //app.MapControllers().RequireRateLimiting("PerHourPolicy");
 
             app.Run();
         }
