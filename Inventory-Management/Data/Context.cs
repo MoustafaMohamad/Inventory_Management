@@ -17,6 +17,7 @@ namespace Inventory_Management.Data
         DbSet<Role> Roles { get; set; } 
         DbSet<RoleFeature> RoleFeatures { get; set; }
         DbSet<User> Users { get; set; }
+        DbSet<OtpVerification> Otps { get; set; }
 
         public Context()
         {

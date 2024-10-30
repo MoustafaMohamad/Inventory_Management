@@ -1,5 +1,4 @@
 ﻿using Inventory_Management.Common;
-using Inventory_Management.CQRS.OTP.Commands;
 using Inventory_Management.Entities;
 using MediatR;
 
@@ -18,7 +17,7 @@ namespace Inventory_Management.CQRS.Email.Command
 
         public override Task<User> Handle(EmailExistsQuery request, CancellationToken cancellationToken)
         {
-            Task<User> check = _repository.First(o => o.Email == request.Email);
+            Task<User> check = _repository.FirstAsync(o => o.Email == request.Email);
             if (check != null)
             {
                 return check;
