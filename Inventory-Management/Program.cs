@@ -10,6 +10,7 @@ using Inventory_Management.Common.Middlewares;
 using Inventory_Management.Common.Profiles;
 using Inventory_Management.Features.Products.AddProduct;
 using Inventory_Management.Features.Products.AddProduct.Commands;
+using Inventory_Management.Features.Products.UpdateProduct;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Net;
@@ -40,6 +41,7 @@ namespace Inventory_Management
                Port = 587
            });
             builder.Services.AddScoped<IValidator<AddProductEndPointRequest>, AddProductValidator>();
+            builder.Services.AddScoped<IValidator<UpdateProductEndPointRequest>, UpdateProductValidator>();
 
             #region AutoFac
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

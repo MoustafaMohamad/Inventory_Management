@@ -23,7 +23,10 @@ namespace Inventory_Management.Features.Products.AddProduct.Commands
         }
         public async override Task <ResultDto<int>> Handle(AddProductCommand request, CancellationToken cancellationToken)
         {
-          
+            if (request.ExpiryDate <= DateTime.UtcNow)
+            {
+                return ResultDto<int>.Faliure(ErrorCode.InvalidExpirtDate, "Invalid Expiry Date");
+            }
              
             var imageUploadResult =await _cloudinaryService.UploadImageAsync(request.Image);
             var imageUrl = imageUploadResult.Url.ToString();

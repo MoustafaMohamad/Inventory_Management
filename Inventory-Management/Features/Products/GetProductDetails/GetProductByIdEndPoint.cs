@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Products.GetProductDetails
 {
     [ApiController]
-    [Route("api/Products/GetProductById")]
+    [Route("api/Products")]
     public class GetProductByIdEndPoint:ControllerBase
     {
         private readonly IMediator _mediator;

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Products.DeleteProduct
 {
     [ApiController]
-    [Route("api/Products/DeleteProduct")]
+    [Route("api/Products/delete-product")]
     public class DeleteProductEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -16,7 +16,7 @@ namespace Inventory_Management.Features.Products.DeleteProduct
         {
             _mediator = mediator;
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         //[Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteProductById(int id)
         {

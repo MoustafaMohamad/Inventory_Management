@@ -4,7 +4,8 @@
     {
         None,
         UnKnown,
-        // USER
+        ThisFieldIsRequierd,
+        // User 100-199
         EmailIsNotFound,
         WrongPassword,
         PasswordsDontMatch,
@@ -15,8 +16,11 @@
         RoleNotFound,
         OtpIsNotValid,
         OtpIsNotFound,
-        //Product
+        //Product 200-299
         InvalidProductID,
         NoProductsFound,
+        GreaterThan0,
+        GreaterThanThreshold,
+        InvalidExpirtDate,
     }
 }

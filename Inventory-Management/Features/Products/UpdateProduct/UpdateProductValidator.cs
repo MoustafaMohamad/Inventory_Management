@@ -1,24 +1,19 @@
 ﻿using FluentValidation;
 using Inventory_Management.Common.Exceptions;
-using Inventory_Management.Common.Helpers;
-using Inventory_Management.Entities;
-using Inventory_Management.Features.Products.AddProduct.Commands;
-using Inventory_Management.Features.Users.RegisterUser.Commands;
-using System;
+using Inventory_Management.Features.Products.AddProduct;
 
-namespace Inventory_Management.Features.Products.AddProduct
+namespace Inventory_Management.Features.Products.UpdateProduct
 {
-  
-    public class AddProductValidator : AbstractValidator<AddProductEndPointRequest>
+    public class UpdateProductValidator : AbstractValidator<UpdateProductEndPointRequest>
     {
-        public AddProductValidator()
+        public UpdateProductValidator()
         {
             RuleFor(p => p.Name).NotNull().WithErrorCode(ErrorCode.ThisFieldIsRequierd.ToString()).WithMessage("This Field Is Requierd")
                 .Length(3, 15);
 
             RuleFor(p => p.Price).NotNull().WithErrorCode(ErrorCode.ThisFieldIsRequierd.ToString()).WithMessage("This Field Is Requierd")
                 .GreaterThan(0).WithErrorCode(ErrorCode.GreaterThan0.ToString()).WithMessage("Price should be more than 0")
-                .PrecisionScale(4, 2,true);
+                .PrecisionScale(4, 2, true);
 
             RuleFor(p => p.Quantity).NotNull().WithErrorCode(ErrorCode.ThisFieldIsRequierd.ToString()).WithMessage("This Field Is Requierd")
                 .GreaterThan(0).WithErrorCode(ErrorCode.GreaterThan0.ToString()).WithMessage("Quantity should be more than 0")
@@ -32,5 +27,4 @@ namespace Inventory_Management.Features.Products.AddProduct
                 .GreaterThan(0).WithErrorCode(ErrorCode.GreaterThan0.ToString()).WithMessage("Threshold should be more than 0");
         }
     }
-  
 }
