@@ -9,7 +9,7 @@ namespace Inventory_Management.Features.Users.Loginuser
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/Users/LoginUser")]
     public class LoginUserEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;

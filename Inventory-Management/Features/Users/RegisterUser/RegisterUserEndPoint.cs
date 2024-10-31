@@ -9,7 +9,7 @@ namespace Inventory_Management.Features.Users.RegisterUser
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/Users/RegisterUser")]
     public class RegisterUserEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;

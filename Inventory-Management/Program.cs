@@ -4,16 +4,17 @@ using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Common;
 using Common.Helpers;
-using Inventory_Management.Common;
+using DotNetEnv;
+using FluentValidation;
+using Inventory_Management.Common.Middlewares;
 using Inventory_Management.Common.Profiles;
-using MediatR;
+using Inventory_Management.Features.Products.AddProduct;
+using Inventory_Management.Features.Products.AddProduct.Commands;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Net.Mail;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
-using DotNetEnv;
-using Inventory_Management.Common.Middlewares;
 
 namespace Inventory_Management
 {
@@ -22,6 +23,10 @@ namespace Inventory_Management
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
             //Enviroment
             Env.Load();
             // Add services to the container.
@@ -34,15 +39,8 @@ namespace Inventory_Management
                EnableSsl = true,
                Port = 587
            });
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            #region MediatR
+            builder.Services.AddScoped<IValidator<AddProductEndPointRequest>, AddProductValidator>();
 
-            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-
-            #endregion
             #region AutoFac
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
@@ -53,7 +51,11 @@ namespace Inventory_Management
             builder.Services.AddAutoMapper(typeof(UserProfile));
             #endregion
 
-           
+            #region MediatR
+
+            builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+            #endregion
 
 
             #region Authentication 
@@ -80,13 +82,13 @@ namespace Inventory_Management
 
             var app = builder.Build();
 
+            app.UseRouting();
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
-                app.UseSwagger();
-                app.UseSwaggerUI();
             }
-             
+            app.UseSwagger();
+            app.UseSwaggerUI();
             app.UseHttpsRedirection();
             app.UseMiddleware<GlobalErrorHandlerMiddleware>();
             app.UseMiddleware<TransactionMiddleware>();
@@ -94,6 +96,10 @@ namespace Inventory_Management
             app.UseAuthorization();
 
             MapperHelper.Mapper = app.Services.GetService<IMapper>();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            }); 
             app.MapControllers();
 
             app.Run();

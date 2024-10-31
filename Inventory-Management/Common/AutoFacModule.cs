@@ -1,8 +1,12 @@
 ﻿using Autofac;
+using FluentValidation;
 using Inventory_Management.Common;
+using Inventory_Management.Common.Helpers;
 using Inventory_Management.Common.Repositories;
 using Inventory_Management.Data;
 using Inventory_Management.Entities;
+using Inventory_Management.Features.Products.AddProduct;
+using Inventory_Management.Features.Products.AddProduct.Commands;
 
 namespace Common
 {
@@ -10,6 +14,7 @@ namespace Common
     {
         protected override void Load(ContainerBuilder builder)
         {
+
             builder.RegisterType<Context>().InstancePerLifetimeScope();
             //builder.RegisterGeneric(typeof(RequestParameters<>)).InstancePerLifetimeScope();
             builder.RegisterType<UserState>().InstancePerLifetimeScope();
@@ -17,8 +22,28 @@ namespace Common
             builder.RegisterType<RequestParameters<User>>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<RequestParameters<Role>>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<RequestParameters<OtpVerification>>().AsSelf().InstancePerLifetimeScope();
-            //marwa.asm95@gmail.com
+            builder.RegisterType<RequestParameters<Product>>().AsSelf().InstancePerLifetimeScope();
+
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
+
+            builder.RegisterAssemblyTypes(typeof(ICloudinaryService).Assembly)
+                   .AsImplementedInterfaces()
+                   .SingleInstance();
+            builder.RegisterType<AddProductValidator>().AsSelf().InstancePerLifetimeScope();
+            /// builder.RegisterType<AddProductValidator>().AsSelf().InstancePerLifetimeScope();
+            //builder.RegisterType<AddProductValidation>().AsSelf().InstancePerLifetimeScope();
+
+            //// Register FluentValidation validators
+            //builder.RegisterType<AddProductValidator>()
+            //       .As<IValidator<AddProductCommand>>()
+            //       .InstancePerLifetimeScope();
+
+            //// Register all other validators if needed
+            //builder.RegisterAssemblyTypes(typeof(AddProductValidator).Assembly)
+            //       .Where(t => t.IsSubclassOf(typeof(AbstractValidator<>)))
+            //       .As<IValidator>()
+            //       .InstancePerLifetimeScope();
+            //builder.RegisterType<AddProductCommand>().InstancePerLifetimeScope();
 
         }
     }

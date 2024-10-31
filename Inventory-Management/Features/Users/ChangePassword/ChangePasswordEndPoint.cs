@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Users.ChangePassword
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/Users/ChangePassword")]
     public class ChangePasswordEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;

@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Users.ForgetPassword
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/Users/ForgetPassword")]
     public class ForgetPasswordEndPoint :ControllerBase
     {
         private readonly IMediator _mediator;

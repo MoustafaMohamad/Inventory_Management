@@ -14,6 +14,9 @@
         UnableTogenerateToken,
         RoleNotFound,
         OtpIsNotValid,
-        OtpIsNotFound
+        OtpIsNotFound,
+        //Product
+        InvalidProductID,
+        NoProductsFound,
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Users.ResetPassword
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/Users/ResetPassword")]
     public class ResetPasswordEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;

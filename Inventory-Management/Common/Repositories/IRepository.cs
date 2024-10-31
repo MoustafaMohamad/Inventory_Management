@@ -9,7 +9,7 @@ namespace Inventory_Management.Common.Repositories
         void Update(T entity);
         void Delete(T entity);
         void Delete(int id);
-   
+
         T GetByID(int id);
         Task<T> FirstAsync(Expression<Func<T, bool>> predicate);
         Task<IQueryable<T>> GetAll();
