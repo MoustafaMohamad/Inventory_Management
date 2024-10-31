@@ -2,5 +2,6 @@
 {
     public class ForgetPasswordEndPointRequest
     {
+        public string Email { get; set; }
     }
 }
