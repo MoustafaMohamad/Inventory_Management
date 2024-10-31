@@ -33,14 +33,11 @@ namespace Inventory_Management.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Feature>(entity =>
-            {
-                entity.Property(e => e.featureValue)
-                      .HasConversion<int>()  
-                      .IsRequired();
+            
 
-                
-            });
-        }
+            }
+
+           
+        
     }
 }
