@@ -19,7 +19,7 @@ namespace Inventory_Management.Common.Profiles
         public UserProfile()
         {
             CreateMap<ForgetPasswordEndPointRequest, ForgetPasswordOrchestrator>();
-            CreateMap<UserDto,User>().ReverseMap();
+            CreateMap<UserDto, User>().ReverseMap();
             CreateMap<ResetPasswordEndPointRequest, ResetPasswordCommand>();
             CreateMap<ChangePasswordEndPointRequest, ChangePasswordCommand>();
             CreateMap<RegisterUserEndPointRequest, RegisterUserCommand>();

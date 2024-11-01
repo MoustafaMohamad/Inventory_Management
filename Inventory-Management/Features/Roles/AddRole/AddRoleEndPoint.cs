@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Roles.AddRole
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/roles")]
     public class AddRoleEndPoint : ControllerBase 
     {
         private readonly IMediator _mediator;
@@ -17,7 +17,7 @@ namespace Inventory_Management.Features.Roles.AddRole
         }
 
 
-        [HttpPost("Add-role")]
+        [HttpPost]
         public async Task<ResultViewModel> AddRoleAsync(AddRoleEndPointRequest request)
         {
           var result=   await _mediator.Send(new AddRoleCommand(request.RoleName));

@@ -4,16 +4,25 @@
     {
         None,
         UnKnown,
-        // USER
+        ThisFieldIsRequierd,
+        // User 100-199
         EmailIsNotFound,
         WrongPassword,
         PasswordsDontMatch,
         EmailAlreadyExist,
+        EmailIsNotValid,
+        PasswordIsNotValid,
         UserNameAlreadyExist,
         WrongPasswordOrEmail,
         UnableTogenerateToken,
         RoleNotFound,
         OtpIsNotValid,
-        OtpIsNotFound
+        OtpIsNotFound,
+        //Product 200-299
+        InvalidProductID,
+        NoProductsFound,
+        GreaterThan0,
+        GreaterThanThreshold,
+        InvalidExpirtDate,
     }
 }
