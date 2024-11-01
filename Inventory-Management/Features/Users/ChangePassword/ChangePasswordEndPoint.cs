@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Users.ChangePassword
 {
     [ApiController]
-    [Route("api/Users/ChangePassword")]
+    [Route("api/Users")]
+
     public class ChangePasswordEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -16,7 +17,7 @@ namespace Inventory_Management.Features.Users.ChangePassword
         {
             _mediator = mediator;
         }
-        [HttpPost]
+        [HttpPost("Change-password")]
         public async Task<IActionResult> ChangePasswordAsync([FromBody] ChangePasswordEndPointRequest request)
         {
             var result = await _mediator.Send(request.MapOne<ChangePasswordCommand>());

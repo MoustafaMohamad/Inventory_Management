@@ -6,6 +6,8 @@ namespace Inventory_Management.Common.Repositories
     public interface IRepository<T> where T : BaseModel 
     {
         Task<T> AddAsync(T entity);
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+        void UpdateIncluded(T entity, params string[] updatedProperties);
         void Update(T entity);
         void Delete(T entity);
         void Delete(int id);

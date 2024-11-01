@@ -1,3 +1,4 @@
+
 ﻿using Inventory_Management.Common.Enums;
 
 namespace Inventory_Management.Entities
@@ -13,5 +14,6 @@ namespace Inventory_Management.Entities
         public int Threshold { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedAt { get; set; }
+
     }
 }
