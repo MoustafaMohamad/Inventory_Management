@@ -1,4 +1,5 @@
 ﻿using Inventory_Management.Common;
+using Inventory_Management.Common.Exceptions;
 using Inventory_Management.Common.Helpers;
 using Inventory_Management.Entities;
 using Inventory_Management.Features.Roles.Common.DTO;
@@ -16,11 +17,16 @@ namespace Inventory_Management.Features.Roles.AddRole.Commands
 
         public override async Task<ResultDto<int>> Handle(AddRoleCommand request, CancellationToken cancellationToken)
         {
+            var existingRole = _repository.FirstOrDefaultAsync(r => r.Name == request.Name);
+            if (existingRole is not null) {
+                return ResultDto<int>.Faliure(ErrorCode.Conflict, "A role with this name already exists."); 
+            }
             var role = await _repository.AddAsync(new Role
             {
                 Name = request.Name
             });
-            await _repository.SaveChanges();
+
+
             return ResultDto<int>.Sucess(role.ID,"Role Added Successfully");
         }
     }

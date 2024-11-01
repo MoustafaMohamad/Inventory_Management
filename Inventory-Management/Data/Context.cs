@@ -13,11 +13,14 @@ namespace Inventory_Management.Data
         }
 
         DbSet<Admin> Admins { get; set; }
-        DbSet<Feature> Features { get; set; }
         DbSet<Role> Roles { get; set; } 
         DbSet<RoleFeature> RoleFeatures { get; set; }
         DbSet<User> Users { get; set; }
         DbSet<OtpVerification> Otps { get; set; }
+
+        DbSet<Product> Products { get; set; }
+
+        DbSet<InventoryTransaction> InventoryTransactions { get; set; }
 
         public Context()
         {

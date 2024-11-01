@@ -45,7 +45,7 @@ namespace Inventory_Management
            configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
                         .UseSimpleAssemblyNameTypeSerializer()
                         .UseRecommendedSerializerSettings()
-                        .UseSqlServerStorage("Server=.;Database=Test22;Trusted_Connection=True;Encrypt=False;",
+                        .UseSqlServerStorage("Server=DESKTOP-GBMV023\\MSSQLSERVER2022;Database=Inventory_Management_System;Trusted_Connection=True;Encrypt=False;",
                                              new SqlServerStorageOptions
                                              {
                                                  CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),

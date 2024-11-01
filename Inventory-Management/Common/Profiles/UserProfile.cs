@@ -25,6 +25,8 @@ namespace Inventory_Management.Common.Profiles
             CreateMap<RegisterUserEndPointRequest, RegisterUserCommand>();
             CreateMap<RegisterUserCommand, User>();
             CreateMap<LoginUserEndPointRequest, LoginUserCommand>();
+
+            CreateMap<GetUserDTO, User>().ReverseMap();
         }
     }
 }

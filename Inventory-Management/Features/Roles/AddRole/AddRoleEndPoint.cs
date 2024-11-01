@@ -18,9 +18,15 @@ namespace Inventory_Management.Features.Roles.AddRole
 
 
         [HttpPost("Add-role")]
-        public async Task<ResultViewModel> AddRoleAsync(AddRoleEndPointRequest request)
+        public async Task<ResultViewModel> AddRoleAsync([FromBody] AddRoleEndPointRequest request)
         {
+            
           var result=   await _mediator.Send(new AddRoleCommand(request.RoleName));
+
+            if (!result.IsSuccess)
+            {
+                ResultViewModel.Faliure(result.ErrorCode, result.Message);
+            }
 
             return ResultViewModel.Sucess(result);
             

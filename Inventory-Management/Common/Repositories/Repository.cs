@@ -1,6 +1,7 @@
 ﻿using Inventory_Management.Data;
 using Inventory_Management.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.Linq.Expressions;
 
 namespace Inventory_Management.Common.Repositories
@@ -43,6 +44,11 @@ namespace Inventory_Management.Common.Repositories
             
         }
 
+        public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync(predicate);
+        }
+
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
         {
             throw new NotImplementedException();
@@ -66,6 +72,32 @@ namespace Inventory_Management.Common.Repositories
         {
               _context.Update(entity);
         }
+
+        public void UpdateIncluded(T entity, params string[] updatedProperties)
+        {
+            T local = _context.Set<T>().Local.FirstOrDefault(x => x.ID == entity.ID);
+
+            EntityEntry entityEntry;
+
+            if (local is null)
+            {
+                entityEntry = _context.Entry(entity);
+            }
+            else
+            {
+                entityEntry = _context.ChangeTracker.Entries<T>().FirstOrDefault(x => x.Entity.ID == entity.ID);
+            }
+
+            foreach (var property in entityEntry.Properties)
+            {
+                if (updatedProperties.Contains(property.Metadata.Name))
+                {
+                    property.CurrentValue = entity.GetType().GetProperty(property.Metadata.Name).GetValue(entity);
+                    property.IsModified = true;
+                }
+            }
+        }
+
 
     }
 }
