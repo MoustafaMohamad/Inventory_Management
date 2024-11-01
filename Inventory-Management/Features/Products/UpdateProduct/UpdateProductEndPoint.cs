@@ -1,29 +1,31 @@
 ﻿using Common.Helpers;
 using Inventory_Management.Common.Exceptions;
 using Inventory_Management.Common.Helpers.ResultViewModel;
-using Inventory_Management.Features.Users.RegisterUser.Commands;
+using Inventory_Management.Features.Products.AddProduct;
+using Inventory_Management.Features.Products.UpdateProduct.Commands;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Inventory_Management.Features.Users.RegisterUser
+namespace Inventory_Management.Features.Products.UpdateProduct
 {
-
     [ApiController]
-    [Route("api/users/register")]
-    public class RegisterUserEndPoint : ControllerBase
+    [Route("api/products")]
+    public class UpdateProductEndPoint:ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly RegisterUserValidator _validator;
-        public RegisterUserEndPoint(IMediator mediator, RegisterUserValidator validator)
+        private readonly UpdateProductValidator _productValidator;
+        public UpdateProductEndPoint(IMediator mediator, UpdateProductValidator productValidator)
         {
             _mediator = mediator;
-            _validator = validator;
+            _productValidator = productValidator;
         }
-        [HttpPost]
-        public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserEndPointRequest request)
+        [HttpPut("{id}")]
+       [Authorize]
+        public async Task<IActionResult> UpdateProductAsync([FromForm] UpdateProductEndPointRequest request)
         {
             #region Validation
-            var validationResults = _validator.Validate(request);
+            var validationResults = _productValidator.Validate(request);
 
             if (!validationResults.IsValid)
             {
@@ -36,12 +38,13 @@ namespace Inventory_Management.Features.Users.RegisterUser
                 }
             }
             #endregion 
-            var result = await _mediator.Send(request.MapOne<RegisterUserCommand>());
+            var result = await _mediator.Send(request.MapOne<UpdateProductCommand>());
             if (!result.IsSuccess)
             {
                 throw new BusinessException(result.ErrorCode, result.Message);
             }
             return Ok(ResultViewModel.Sucess(result.Data, result.Message));
         }
+
     }
 }

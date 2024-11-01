@@ -13,12 +13,12 @@ namespace Inventory_Management.Common.Repositories
         {
             _context = context;
         }
-        
+
         public async Task<T> AddAsync(T entity)
         {
-           await _context.Set<T>().AddAsync(entity);
-            return entity;  
-           
+            await _context.Set<T>().AddAsync(entity);
+            return entity;
+
         }
 
         public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate)
@@ -37,10 +37,10 @@ namespace Inventory_Management.Common.Repositories
             Update(entity);
         }
 
-        public async Task< T> FirstAsync(Expression<Func<T, bool>> predicate)
+        public async Task<T> FirstAsync(Expression<Func<T, bool>> predicate)
         {
-            return  await _context.Set<T>().Where(e=>!e.IsDeleted).FirstOrDefaultAsync(predicate);    
-            
+            return await _context.Set<T>().Where(e => !e.IsDeleted).FirstOrDefaultAsync(predicate);
+
         }
 
         public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
@@ -55,16 +55,16 @@ namespace Inventory_Management.Common.Repositories
 
         public T GetByID(int id)
         {
-            return _context.Set<T>().Where(e => !e.IsDeleted).FirstOrDefault(t => t.ID == id);
+            return _context.Set<T>().AsNoTracking().Where(e => !e.IsDeleted).FirstOrDefault(t => t.ID == id);
         }
         public async Task SaveChanges()
         {
             await _context.SaveChangesAsync();
         }
 
-        public  void Update(T entity)
+        public void Update(T entity)
         {
-              _context.Update(entity);
+            _context.Update(entity);
         }
 
     }
