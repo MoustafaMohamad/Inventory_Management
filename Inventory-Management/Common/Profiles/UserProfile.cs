@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using Inventory_Management.Entities;
 using Inventory_Management.Features.Common.Users.Dto;
-using Inventory_Management.Features.Users.ForgetPassword;
-using Inventory_Management.Features.Users.ForgetPassword.Commands;
-using Inventory_Management.Features.Users.ResetPassword;
-using Inventory_Management.Features.Users.ResetPassword.Commands;
+
 
 namespace Inventory_Management.Common.Profiles
 {
@@ -12,9 +9,9 @@ namespace Inventory_Management.Common.Profiles
     {
         public UserProfile()
         {
-            CreateMap<ForgetPasswordEndPointRequest, ForgetPasswordCommand>();
+            //CreateMap<ForgetPasswordEndPointRequest, ForgetPasswordCommand>();
             CreateMap<UserDto,User>().ReverseMap();
-            CreateMap<ResetPasswordEndPointRequest, ResetPasswordCommand>();
+            //CreateMap<ResetPasswordEndPointRequest, ResetPasswordCommand>();
         }
     }
 }

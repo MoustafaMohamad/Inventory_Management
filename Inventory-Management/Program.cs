@@ -9,6 +9,8 @@ using Inventory_Management.Common.Profiles;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Net.Mail;
+using System.Net;
 using System.Text;
 
 namespace Inventory_Management
@@ -25,6 +27,16 @@ namespace Inventory_Management
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddFluentEmail("maim6349@gmail.com")
+             .AddRazorRenderer()  // or AddLiquidRenderer() if you want to use Liquid templates
+             .AddSmtpSender(new SmtpClient("smtp.gmail.com")
+             {
+                 UseDefaultCredentials = false,
+                 Credentials = new NetworkCredential("maim6349@gmail.com", "rzam ngki omum hbgw"),
+                 EnableSsl = true,
+                 Port = 587
+             });
 
             #region AutoFac
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
