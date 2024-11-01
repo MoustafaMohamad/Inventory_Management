@@ -3,12 +3,13 @@ using Inventory_Management.Common.Exceptions;
 using Inventory_Management.Common.Helpers.ResultViewModel;
 using Inventory_Management.Features.Products.GetProductDetails.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Inventory_Management.Features.Products.GetProductDetails
 {
     [ApiController]
-    [Route("api/Products")]
+    [Route("api/products")]
     public class GetProductByIdEndPoint:ControllerBase
     {
         private readonly IMediator _mediator;
@@ -17,7 +18,7 @@ namespace Inventory_Management.Features.Products.GetProductDetails
             _mediator = mediator;
         }
         [HttpGet("{id}")]
-        // [Authorize(Roles = "Admin")]
+         [Authorize]
         public async Task<IActionResult> GetProductByIdAsync(int id)
         {
             var result = await _mediator.Send(new GetProductByIdQuery(id));

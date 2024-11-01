@@ -5,14 +5,11 @@ using AutoMapper;
 using Common;
 using Common.Helpers;
 using DotNetEnv;
-using FluentValidation;
 using Inventory_Management.Common.Middlewares;
 using Inventory_Management.Common.Profiles;
-using Inventory_Management.Features.Products.AddProduct;
-using Inventory_Management.Features.Products.AddProduct.Commands;
-using Inventory_Management.Features.Products.UpdateProduct;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -27,6 +24,40 @@ namespace Inventory_Management
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+            #region Swagger Bearer
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Food App Api", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = "JWT Authorization header using the Bearer scheme. " +
+                                    "\r\n\r\n Enter 'Bearer' [space] and then your token in the text input below." +
+                                    "\r\n\r\nExample: \"Bearer abcdefghijklmnopqrstuvwxyz\"",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement()
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                },
+                Scheme = "oauth2",
+                Name = "Bearer",
+                In = ParameterLocation.Header,
+
+            },
+            new List<string>()
+        }
+    });
+            });
+            #endregion
             builder.Services.AddSwaggerGen();
             //Enviroment
             Env.Load();
@@ -40,8 +71,6 @@ namespace Inventory_Management
                EnableSsl = true,
                Port = 587
            });
-            builder.Services.AddScoped<IValidator<AddProductEndPointRequest>, AddProductValidator>();
-            builder.Services.AddScoped<IValidator<UpdateProductEndPointRequest>, UpdateProductValidator>();
 
             #region AutoFac
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());

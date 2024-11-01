@@ -7,6 +7,12 @@ using Inventory_Management.Data;
 using Inventory_Management.Entities;
 using Inventory_Management.Features.Products.AddProduct;
 using Inventory_Management.Features.Products.AddProduct.Commands;
+using Inventory_Management.Features.Products.UpdateProduct;
+using Inventory_Management.Features.Users.ChangePassword;
+using Inventory_Management.Features.Users.ForgetPassword;
+using Inventory_Management.Features.Users.Loginuser;
+using Inventory_Management.Features.Users.RegisterUser;
+using Inventory_Management.Features.Users.ResetPassword;
 
 namespace Common
 {
@@ -30,20 +36,13 @@ namespace Common
                    .AsImplementedInterfaces()
                    .SingleInstance();
             builder.RegisterType<AddProductValidator>().AsSelf().InstancePerLifetimeScope();
-            /// builder.RegisterType<AddProductValidator>().AsSelf().InstancePerLifetimeScope();
-            //builder.RegisterType<AddProductValidation>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<UpdateProductValidator>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RegisterUserValidator>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<LoginUserValidator>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<ForgetPasswordValidator>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<ChangePasswordValidator>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<ResetpasswordValidator>().AsSelf().InstancePerLifetimeScope();
 
-            //// Register FluentValidation validators
-            //builder.RegisterType<AddProductValidator>()
-            //       .As<IValidator<AddProductCommand>>()
-            //       .InstancePerLifetimeScope();
-
-            //// Register all other validators if needed
-            //builder.RegisterAssemblyTypes(typeof(AddProductValidator).Assembly)
-            //       .Where(t => t.IsSubclassOf(typeof(AbstractValidator<>)))
-            //       .As<IValidator>()
-            //       .InstancePerLifetimeScope();
-            //builder.RegisterType<AddProductCommand>().InstancePerLifetimeScope();
 
         }
     }

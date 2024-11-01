@@ -10,6 +10,8 @@
         WrongPassword,
         PasswordsDontMatch,
         EmailAlreadyExist,
+        EmailIsNotValid,
+        PasswordIsNotValid,
         UserNameAlreadyExist,
         WrongPasswordOrEmail,
         UnableTogenerateToken,

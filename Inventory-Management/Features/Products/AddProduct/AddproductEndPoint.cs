@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Products.AddProduct
 {
     [ApiController]
-    [Route("api/Products/add-product")]
+    [Route("api/products")]
     public class AddproductEndPoint:ControllerBase
     {
         private readonly IMediator _mediator;
@@ -22,7 +22,7 @@ namespace Inventory_Management.Features.Products.AddProduct
            _productValidator = productValidator;
         }
         [HttpPost]
-       // [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> AddProductAsync([FromForm] AddProductEndPointRequest request)
         {
             #region Validation

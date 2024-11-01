@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Products.UpdateProduct
 {
     [ApiController]
-    [Route("api/Products/update-product")]
+    [Route("api/products")]
     public class UpdateProductEndPoint:ControllerBase
     {
         private readonly IMediator _mediator;
@@ -21,7 +21,7 @@ namespace Inventory_Management.Features.Products.UpdateProduct
             _productValidator = productValidator;
         }
         [HttpPut("{id}")]
-       // [Authorize(Roles = "Admin")]
+       [Authorize]
         public async Task<IActionResult> UpdateProductAsync([FromForm] UpdateProductEndPointRequest request)
         {
             #region Validation

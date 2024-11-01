@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Roles.AddRole
 {
     [ApiController]
-    [Route("[controller]/[action]")]
+    [Route("api/roles")]
     public class AddRoleEndPoint : ControllerBase 
     {
         private readonly IMediator _mediator;

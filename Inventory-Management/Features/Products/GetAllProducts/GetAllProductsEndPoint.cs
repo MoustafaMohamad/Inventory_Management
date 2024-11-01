@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.Products.GetAllProducts
 {
     [ApiController]
-    [Route("api/Products")]
+    [Route("api/products")]
     public class GetAllProductsEndPoint:ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,7 +20,7 @@ namespace Inventory_Management.Features.Products.GetAllProducts
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> GetAllProductsAsync()
         {
             var result = await _mediator.Send(new GetAllProductsQuery());

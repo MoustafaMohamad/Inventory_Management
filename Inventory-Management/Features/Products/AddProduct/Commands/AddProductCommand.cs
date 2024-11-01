@@ -39,6 +39,7 @@ namespace Inventory_Management.Features.Products.AddProduct.Commands
             product.ExpiryDate = request.ExpiryDate;
             product.Unit = request.Unit;
             product.ImageUrl = imageUrl;
+            product.Available = productAvailability.InStock;
             product.CreatedAt = DateTime.UtcNow;
 
             var addedProduct = await _repository.AddAsync(product);

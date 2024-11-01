@@ -1,4 +1,4 @@
-﻿namespace Inventory_Management.Features.Roles
+﻿namespace Inventory_Management.Features.Roles.AddRole
 {
     public class AddRoleEndPointRequest
     {
