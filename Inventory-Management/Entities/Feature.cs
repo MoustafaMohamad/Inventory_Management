@@ -2,10 +2,7 @@
 
 namespace Inventory_Management.Entities
 {
-    public class Feature : BaseModel 
+    public enum Feature
     {
-        public string Name { get; set; }
-
-       public EnumFeature featureValue {  get; set; } 
     }
 }

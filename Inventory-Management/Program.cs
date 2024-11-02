@@ -127,6 +127,8 @@ namespace Inventory_Management
             app.UseAuthorization();
 
             MapperHelper.Mapper = app.Services.GetService<IMapper>();
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
