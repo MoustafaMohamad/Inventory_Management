@@ -16,5 +16,9 @@ namespace Inventory_Management.Common.Repositories
         IQueryable<T> Get(Expression<Func<T, bool>> predicate);
         Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
         Task SaveChanges();
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+        void UpdateIncluded(T entity, params string[] updatedProperties);
+        T UpdatewithReturn(T entity);
+        Task SaveChangesAsync(); 
     }
 }
