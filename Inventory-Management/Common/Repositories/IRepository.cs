@@ -13,7 +13,7 @@ namespace Inventory_Management.Common.Repositories
         T GetByID(int id);
         Task<T> FirstAsync(Expression<Func<T, bool>> predicate);
         Task<IQueryable<T>> GetAll();
-        IQueryable<T> Get(Expression<Func<T, bool>> predicate);
+       Task< IQueryable<T>> Get(Expression<Func<T, bool>> predicate);
         Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
         Task SaveChanges();
         Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);

@@ -27,7 +27,8 @@ namespace Inventory_Management.Data
         {
             
             optionsBuilder.UseSqlServer(
-                "Server=DESKTOP-GBMV023\\MSSQLSERVER2022;Database=Inventory_Management_System;Trusted_Connection=True;Encrypt=False;"
+                 // "Server=DESKTOP-GBMV023\\MSSQLSERVER2022;Database=Inventory_Management_System;Trusted_Connection=True;Encrypt=False;"
+                 "Server =MSI\\SQLEXPRESS; Database = Inventory_Management; Trusted_Connection = True; TrustServerCertificate = True;"
                 )
                 .LogTo(log => Console.WriteLine(log))
                 .EnableSensitiveDataLogging();

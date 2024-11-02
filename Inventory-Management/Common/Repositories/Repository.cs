@@ -46,9 +46,9 @@ namespace Inventory_Management.Common.Repositories
 
         }
 
-        public IQueryable<T> Get(Expression<Func<T, bool>> predicate)
+        public async Task<IQueryable<T>> Get(Expression<Func<T, bool>> predicate)
         {
-            throw new NotImplementedException();
+            return _context.Set<T>().Where(e => !e.IsDeleted).Where(predicate);
         }
 
         public async Task<IQueryable<T>> GetAll()
