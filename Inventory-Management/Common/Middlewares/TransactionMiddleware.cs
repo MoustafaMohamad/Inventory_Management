@@ -17,18 +17,22 @@ namespace Inventory_Management.Common.Middlewares
 
         public async Task InvokeAsync(HttpContext context ) { 
             
-            string method= context.Request.Method;
+            string method= context.Request.Method.ToUpper();
 
-            if (method.ValueEqualsTo("POST") || method.ValueEqualsTo("PUT") || method.ValueEqualsTo("DELETE")) {
+            if (method=="POST" || method == "PUT" || method == "DELETE" ) {
                 var transaction = _context.Database.BeginTransaction();
                 try
                 {
                     await _next(context);
                     transaction.Commit();
-                   await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync();
+
+                    Console.WriteLine(_context.GetHashCode());
+
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine($"Error error :: {ex.Message}");
                     transaction.Rollback();
                     throw;
                 }
