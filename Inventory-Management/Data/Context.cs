@@ -29,20 +29,18 @@ namespace Inventory_Management.Data
         {
             
             optionsBuilder.UseSqlServer(
-                //"Data Source=SQL9001.site4now.net;Initial Catalog=db_aaeba0_env00;User Id=db_aaeba0_env00_admin;Password=Apis_Ups2024"
-                "Server =MSI\\SQLEXPRESS; Database = Inventory_Management; Trusted_Connection = True; TrustServerCertificate = True;"
-                )
-                .LogTo(log => Debug.WriteLine(log), LogLevel.Information)
-                .EnableSensitiveDataLogging();
+                "Data Source=SQL9001.site4now.net;Initial Catalog=db_aaeba0_env00;User Id=db_aaeba0_env00_admin;Password=Apis_Ups2024"
+                //"Server =MSI\\SQLEXPRESS; Database = Inventory_Management; Trusted_Connection = True; TrustServerCertificate = True;"
+            )
+            .LogTo(log => Debug.WriteLine(log), LogLevel.Information)
+            .EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             
 
-            }
-
-           
+        }
         
     }
 }
