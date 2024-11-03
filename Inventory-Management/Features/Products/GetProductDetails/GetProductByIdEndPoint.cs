@@ -18,7 +18,7 @@ namespace Inventory_Management.Features.Products.GetProductDetails
             _mediator = mediator;
         }
         [HttpGet("{id}")]
-         [Authorize]
+        [Authorize]
         public async Task<IActionResult> GetProductByIdAsync(int id)
         {
             var result = await _mediator.Send(new GetProductByIdQuery(id));

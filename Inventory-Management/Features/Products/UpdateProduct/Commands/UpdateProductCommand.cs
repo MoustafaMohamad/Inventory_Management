@@ -11,6 +11,7 @@ namespace Inventory_Management.Features.Products.UpdateProduct.Commands
     public record UpdateProductCommand(int ID,
         string Name, Category Category,
         int Quantity, decimal Price, int Threshold,
+        productAvailability Available,
         DateTime ExpiryDate, string Unit,
         IFormFile Image) : IRequest<ResultDto<bool>>;
 
@@ -46,7 +47,7 @@ namespace Inventory_Management.Features.Products.UpdateProduct.Commands
             product.Threshold = request.Threshold;
             product.ExpiryDate = request.ExpiryDate;
             product.Unit = request.Unit;
-            product.CreatedAt = DateTime.UtcNow;
+            product.Available = request.Available;
             _repository.Update(product);
             await _repository.SaveChanges();
             return ResultDto<bool>.Sucess(true);
