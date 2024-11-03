@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 namespace Inventory_Management.Features.InventoryTransactions.AddStock
 {
     [ApiController]
+
     [Route("api/InventoryTransactions")]
+
     public class AddStockEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;
