@@ -21,7 +21,7 @@ namespace Inventory_Management.Features.Common.Products.Queries
                 return false;
             }
 
-            return false;
+            return true;
         }
     }
 }

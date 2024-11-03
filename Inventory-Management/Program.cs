@@ -5,8 +5,11 @@ using AutoMapper;
 using Common;
 using Common.Helpers;
 using DotNetEnv;
+using Hangfire;
+using Hangfire.SqlServer;
 using Inventory_Management.Common.Middlewares;
 using Inventory_Management.Common.Profiles;
+using Inventory_Management.Features.Common.BackGround_jobs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -72,6 +75,27 @@ namespace Inventory_Management
                Port = 587
            });
 
+
+
+
+            builder.Services.AddHangfire(configuration =>
+     configuration.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                  .UseSimpleAssemblyNameTypeSerializer()
+                  .UseRecommendedSerializerSettings()
+                  .UseSqlServerStorage("Server=.;Database=test123;Trusted_Connection=True;Encrypt=False;",
+                                       new SqlServerStorageOptions
+                                       {
+                                           CommandBatchMaxTimeout = TimeSpan.FromMinutes(5),
+                                           SlidingInvisibilityTimeout = TimeSpan.FromMinutes(5),
+                                           QueuePollInterval = TimeSpan.Zero,
+                                           UseRecommendedIsolationLevel = true,
+                                           DisableGlobalLocks = true
+                                       }));
+
+            // Add Hangfire Server
+            builder.Services.AddHangfireServer();
+
+
             #region AutoFac
             builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
             builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
@@ -120,6 +144,24 @@ namespace Inventory_Management
             }
             app.UseSwagger();
             app.UseSwaggerUI();
+
+            app.UseHangfireDashboard("/hangfire");
+
+            // Register the recurring job
+            RecurringJob.AddOrUpdate<SampleJob2>(
+                job => job.ExecuteJobAsync(),
+                Cron.Daily(11, 25) // 15 = 3 PM, 30 = 30 minutes
+            );
+
+            RecurringJob.AddOrUpdate<SampleJob1>(
+                job => job.ExecuteJob(),
+                Cron.Daily(12, 25) // 15 = 3 PM, 30 = 30 minutes
+            );
+
+
+            app.UseHttpsRedirection();
+
+
             app.UseHttpsRedirection();
             app.UseMiddleware<GlobalErrorHandlerMiddleware>();
             app.UseMiddleware<TransactionMiddleware>();

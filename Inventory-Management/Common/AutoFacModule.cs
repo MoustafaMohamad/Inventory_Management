@@ -29,6 +29,9 @@ namespace Common
             builder.RegisterType<RequestParameters<Role>>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<RequestParameters<OtpVerification>>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<RequestParameters<Product>>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RequestParameters<InventoryTransaction>>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RequestParameters<InventoryTransactionArchive>>().AsSelf().InstancePerLifetimeScope();
+
 
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
