@@ -13,7 +13,7 @@ namespace Inventory_Management.Common.Repositories
         public Repository(Context context)
         {
             _context = context;
-            Console.WriteLine(_context.GetHashCode());
+
 
         }
 
