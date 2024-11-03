@@ -26,15 +26,18 @@
         ThisFieldIsRequierd,
         // User 100-199
        
-        EmailIsNotValid,
+        EmailIsNotValid =100,
         PasswordIsNotValid,
         
         
         //Product 200-299
-        InvalidProductID,
+        InvalidProductID=200,
         NoProductsFound,
         GreaterThan0,
         GreaterThanThreshold,
         InvalidExpirtDate,
+        //Transaction 300-399
+        NoTransactionFound =300,
+
     }
 }

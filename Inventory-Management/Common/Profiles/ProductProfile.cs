@@ -7,6 +7,8 @@ using Inventory_Management.Features.Products.GetProductDetails;
 using Inventory_Management.Features.Products.GetAllProducts;
 using Inventory_Management.Features.Products.UpdateProduct;
 using Inventory_Management.Features.Products.UpdateProduct.Commands;
+using Inventory_Management.Features.Reports.LowStockReport.Dtos;
+using Inventory_Management.Features.Reports.LowStockReport;
 
 namespace Inventory_Management.Common.Profiles
 {
@@ -23,6 +25,9 @@ namespace Inventory_Management.Common.Profiles
                 opt => opt.MapFrom(src => src.Category.ToString()));
             CreateMap<UpdateProductEndPointRequest, UpdateProductCommand>();
             CreateMap<UpdateProductCommand, Product>();
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductDto, ProductReportDto>();
+            CreateMap<ProductReportDto, LowStockReportEndPointResponse>();
         }
 }
 }
