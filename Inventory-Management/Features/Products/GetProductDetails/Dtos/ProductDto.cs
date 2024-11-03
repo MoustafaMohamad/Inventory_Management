@@ -6,6 +6,7 @@ namespace Inventory_Management.Features.Products.GetProductDetails.Dtos
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public productAvailability Available { get; set; }
         public Category Category { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }

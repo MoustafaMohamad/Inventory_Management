@@ -8,7 +8,7 @@ using MediatR;
 
 namespace Inventory_Management.Features.Products.GetAllProducts.Queries
 {
-    public record GetAllProductsQuery() : IRequest<ResultDto<IEnumerable<ProductDto>>>;
+    public record GetAllProductsQuery(QueryObject queryParams) : IRequest<ResultDto<IEnumerable<ProductDto>>>;
 
     public class GetAllProductsQueryHandler : BaseRequestHandler<Product, GetAllProductsQuery, ResultDto<IEnumerable<ProductDto>>> 
     {
@@ -19,12 +19,21 @@ namespace Inventory_Management.Features.Products.GetAllProducts.Queries
 
         public async override Task<ResultDto<IEnumerable<ProductDto>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
-            var products = await _repository.GetAll();
-            if (products.Count()==0)
+            var productsQuery = await _repository.GetAll();
+            var queryParams = request.queryParams;
+
+            productsQuery = productsQuery
+                .Where(p => string.IsNullOrEmpty(queryParams.Name) || p.Name == queryParams.Name)
+                .Where(p => request.queryParams.Available == null || p.Available == queryParams.Available);
+
+            if (!productsQuery.Any())
             {
-                throw new BusinessException(ErrorCode.NoProductsFound, "No products Found");
+                return ResultDto<IEnumerable<ProductDto>>.Faliure(ErrorCode.NoProductsFound, "No products Found");
             }
-            var productsDto = products.Map<ProductDto>().ToList();
+            var skipNumber = (request.queryParams.PageNumbar - 1) * request.queryParams.PageSize ;
+            productsQuery = productsQuery.Skip(skipNumber).Take(request.queryParams.PageSize);
+
+            var productsDto = productsQuery.Map<ProductDto>().ToList();
             return ResultDto < IEnumerable<ProductDto>>.Sucess(productsDto);
         }
     }

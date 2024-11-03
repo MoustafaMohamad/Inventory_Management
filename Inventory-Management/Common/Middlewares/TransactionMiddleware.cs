@@ -27,12 +27,11 @@ namespace Inventory_Management.Common.Middlewares
                     transaction.Commit();
                     await _context.SaveChangesAsync();
 
-                    Console.WriteLine(_context.GetHashCode());
 
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error error :: {ex.Message}");
+
                     transaction.Rollback();
                     throw;
                 }
@@ -40,6 +39,7 @@ namespace Inventory_Management.Common.Middlewares
 
             else
             {
+
                 await _next(context);
             }
         }

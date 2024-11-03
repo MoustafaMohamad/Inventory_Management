@@ -17,8 +17,8 @@ namespace Inventory_Management.Features.Products.AddProduct
                 .Length(3, 15);
 
             RuleFor(p => p.Price).NotNull().WithErrorCode(ErrorCode.ThisFieldIsRequierd.ToString()).WithMessage("This Field Is Requierd")
-                .GreaterThan(0).WithErrorCode(ErrorCode.GreaterThan0.ToString()).WithMessage("Price should be more than 0")
-                .PrecisionScale(4, 2,true);
+                .GreaterThan(0).WithErrorCode(ErrorCode.GreaterThan0.ToString()).WithMessage("Price should be more than 0");
+               // .PrecisionScale(4, 2,true);
 
             RuleFor(p => p.Quantity).NotNull().WithErrorCode(ErrorCode.ThisFieldIsRequierd.ToString()).WithMessage("This Field Is Requierd")
                 .GreaterThan(0).WithErrorCode(ErrorCode.GreaterThan0.ToString()).WithMessage("Quantity should be more than 0")
