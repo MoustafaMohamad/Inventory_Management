@@ -10,7 +10,6 @@ namespace Inventory_Management.Common.Profiles
     {
         public TransactionProfile()
         {
-            CreateMap<TransactionHistoryReportEndPointRequest, TransactionHistoryReportQuery>();
             CreateMap<InventoryTransaction, TransactionReportDto>()
                 .ForMember(dst=>dst.UserName,opt=>opt.MapFrom(src=>src.User.UserName))
                 .ForMember(dst => dst.ProductName, opt => opt.MapFrom(src => src.Product.Name)); ;

@@ -19,10 +19,15 @@ namespace Inventory_Management.Common.Profiles
             CreateMap<AddProductEndPointRequest, AddProductCommand>();
             CreateMap<AddProductCommand, Product>();
             CreateMap<Product, ProductDto>().ReverseMap();
-            CreateMap<ProductDto, GetProductByIdEndPointResponse>().ForMember(dst => dst.Category,
-                opt => opt.MapFrom(src => src.Category.ToString()));
+            CreateMap<ProductDto, GetProductByIdEndPointResponse>()
+                .ForMember(dst => dst.Category,
+                opt => opt.MapFrom(src => src.Category.ToString()))
+                .ForMember(dst => dst.Available,
+                opt => opt.MapFrom(src => src.Available.ToString()));
             CreateMap<ProductDto, GetAllProductsEndPointResponse>().ForMember(dst => dst.Category,
-                opt => opt.MapFrom(src => src.Category.ToString()));
+                opt => opt.MapFrom(src => src.Category.ToString()))
+                .ForMember(dst => dst.Available,
+                opt => opt.MapFrom(src => src.Available.ToString()));
             CreateMap<UpdateProductEndPointRequest, UpdateProductCommand>();
             CreateMap<UpdateProductCommand, Product>();
             CreateMap<Product, ProductDto>();
