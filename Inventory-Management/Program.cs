@@ -1,5 +1,6 @@
 
 using Autofac;
+using Autofac.Core;
 using Autofac.Extensions.DependencyInjection;
 using AutoMapper;
 using Common;
@@ -8,6 +9,7 @@ using DotNetEnv;
 using Inventory_Management.Common.Middlewares;
 using Inventory_Management.Common.Profiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Net;
@@ -20,8 +22,20 @@ namespace Inventory_Management
     {
         public static void Main(string[] args)
         {
+
+            
+
+
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers();
+
+            builder.Services.AddScoped<TransactionActionFilter>();
+            builder.Services.AddControllers(options => {
+
+                options.Filters.AddService<TransactionActionFilter>();
+
+                });
+
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             #region Swagger Bearer

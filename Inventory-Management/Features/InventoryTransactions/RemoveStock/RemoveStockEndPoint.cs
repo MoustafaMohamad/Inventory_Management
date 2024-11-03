@@ -7,7 +7,7 @@ namespace Inventory_Management.Features.InventoryTransactions.RemoveStock
 {
     
         [ApiController]
-        [Route("InventoryTransactions")]
+        [Route("api/InventoryTransactions")]
         public class RemoveStockEndPoint : ControllerBase
         {
             private readonly IMediator _mediator;

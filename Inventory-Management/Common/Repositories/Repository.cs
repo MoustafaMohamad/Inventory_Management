@@ -13,7 +13,7 @@ namespace Inventory_Management.Common.Repositories
         public Repository(Context context)
         {
             _context = context;
-            Console.WriteLine(_context.GetHashCode());
+
 
         }
 
@@ -69,8 +69,21 @@ namespace Inventory_Management.Common.Repositories
         {
             Console.WriteLine(_context.GetHashCode());
 
+
             _context.Update(entity);
         }
+
+        public T UpdatewithReturn(T entity)
+        {
+            _context.Update(entity);
+            return entity;
+        }
+        public void UpdateIncluded(T entity, params string[] updatedProperties)
+        {
+            T local = _context.Set<T>().Local.FirstOrDefault(x => x.ID == entity.ID);
+
+            EntityEntry entityEntry;
+
 
         public T UpdatewithReturn(T entity)
         {
