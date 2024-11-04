@@ -13,7 +13,7 @@ using MediatR;
 
 namespace Inventory_Management.Features.Reports.LowStockReport.Commands
 {
-    public record LowStockReportQuery(Category Category) :IRequest<ResultDto<IEnumerable<ProductReportDto>>>;
+    public record LowStockReportQuery(int CategoryID) :IRequest<ResultDto<IEnumerable<ProductReportDto>>>;
     public class LowStockReportQueryHandler : BaseRequestHandler<Product, LowStockReportQuery,ResultDto<IEnumerable<ProductReportDto>>>
     {
         public LowStockReportQueryHandler(RequestParameters<Product> requestParameters) : base(requestParameters)
@@ -23,7 +23,7 @@ namespace Inventory_Management.Features.Reports.LowStockReport.Commands
 
         public async override Task<ResultDto<IEnumerable< ProductReportDto>>> Handle(LowStockReportQuery request, CancellationToken cancellationToken)
         {
-            var productResult = await _mediator.Send(new GetProductsByStatusQuery(request.Category));
+            var productResult = await _mediator.Send(new GetProductsByStatusQuery(request.CategoryID));
             if (!productResult.IsSuccess) 
             {
                 return ResultDto<IEnumerable< ProductReportDto>>.Faliure(productResult.ErrorCode, productResult.Message);

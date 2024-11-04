@@ -18,6 +18,7 @@ namespace Inventory_Management.Data
         DbSet<User> Users { get; set; }
         DbSet<OtpVerification> Otps { get; set; }
         DbSet<Product> Products { get; set; }
+        DbSet<Category> Categories { get; set; }
         DbSet<InventoryTransaction> InventoryTransactions { get; set; }
 
 

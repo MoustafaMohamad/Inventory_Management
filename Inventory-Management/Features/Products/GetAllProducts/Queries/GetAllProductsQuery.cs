@@ -8,33 +8,43 @@ using MediatR;
 
 namespace Inventory_Management.Features.Products.GetAllProducts.Queries
 {
-    public record GetAllProductsQuery(QueryObject queryParams) : IRequest<ResultDto<IEnumerable<ProductDto>>>;
+    public record GetAllProductsQuery(QueryObject queryParams) : IRequest<ResultDto<PaginationResponse<ProductDto>>>;
 
-    public class GetAllProductsQueryHandler : BaseRequestHandler<Product, GetAllProductsQuery, ResultDto<IEnumerable<ProductDto>>> 
+    public class GetAllProductsQueryHandler : BaseRequestHandler<Product, GetAllProductsQuery, ResultDto<PaginationResponse<ProductDto>>> 
     {
         
         public GetAllProductsQueryHandler(RequestParameters<Product> requestParameters) : base(requestParameters)
         {
         }
 
-        public async override Task<ResultDto<IEnumerable<ProductDto>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
+        public async override Task<ResultDto<PaginationResponse<ProductDto>>> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
         {
             var productsQuery = await _repository.GetAll();
             var queryParams = request.queryParams;
+            var productCount = productsQuery.Count();
 
             productsQuery = productsQuery
                 .Where(p => string.IsNullOrEmpty(queryParams.Name) || p.Name == queryParams.Name)
                 .Where(p => request.queryParams.Available == null || p.Available == queryParams.Available);
 
+            var pageSize = queryParams.PageSize != 0 ? queryParams.PageSize : 5;
+            var pageNumber = queryParams.PageNumbar != 0 ? queryParams.PageNumbar : 1;
+
+            var skipNumber = (pageNumber - 1) * pageSize;
+            productsQuery = productsQuery.Skip(skipNumber).Take(pageSize);
             if (!productsQuery.Any())
             {
-                return ResultDto<IEnumerable<ProductDto>>.Faliure(ErrorCode.NoProductsFound, "No products Found");
+                return ResultDto< PaginationResponse < ProductDto >>.Faliure(ErrorCode.NoProductsFound, "No products Found");
             }
-            var skipNumber = (request.queryParams.PageNumbar - 1) * request.queryParams.PageSize ;
-            productsQuery = productsQuery.Skip(skipNumber).Take(request.queryParams.PageSize);
-
             var productsDto = productsQuery.Map<ProductDto>().ToList();
-            return ResultDto < IEnumerable<ProductDto>>.Sucess(productsDto);
+
+            var response = new PaginationResponse<ProductDto>
+            {
+                TotalNumber = productCount,
+                Items = productsDto
+            };
+
+            return ResultDto<PaginationResponse<ProductDto>>.Sucess(response);
         }
     }
 }

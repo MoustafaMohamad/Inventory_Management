@@ -28,6 +28,7 @@
        
         EmailIsNotValid =100,
         PasswordIsNotValid,
+        UserNameLength,
         
         
         //Product 200-299
@@ -36,8 +37,13 @@
         GreaterThan0,
         GreaterThanThreshold,
         InvalidExpirtDate,
+        ProductNameLength,
         //Transaction 300-399
         NoTransactionFound =300,
+        //Category 400-499
+        CategoryIsNotFound =400,
+        NoCategoriesFound,
+
 
     }
 }

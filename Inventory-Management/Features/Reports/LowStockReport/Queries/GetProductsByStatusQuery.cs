@@ -9,7 +9,7 @@ using Common.Helpers;
 
 namespace Inventory_Management.Features.Reports.LowStockReport.Queries
 {
-    public record GetProductsByStatusQuery(Category Category) : IRequest<ResultDto<IEnumerable<ProductDto>>>;
+    public record GetProductsByStatusQuery(int CategoryID) : IRequest<ResultDto<IEnumerable<ProductDto>>>;
 
     public class GetProductsByStatusQueryHandler : BaseRequestHandler<Product, GetProductsByStatusQuery, ResultDto<IEnumerable<ProductDto>>>
     {
@@ -21,7 +21,7 @@ namespace Inventory_Management.Features.Reports.LowStockReport.Queries
 
         public async override Task<ResultDto<IEnumerable<ProductDto>>> Handle(GetProductsByStatusQuery request, CancellationToken cancellationToken)
         {
-            var products = await _repository.Get(p=>p.Category==request.Category && p.Available == productAvailability.LowStock);
+            var products = await _repository.Get(p=>p.CategoryID == request.CategoryID && p.Available == productAvailability.LowStock);
             if (products.Count() == 0)
             {
                 throw new BusinessException(ErrorCode.NoProductsFound, "No products Found");

@@ -2,7 +2,7 @@
 {
     public enum productAvailability
     {
-        InStock,
+        InStock ,
         OutOfStock,
         LowStock
     }

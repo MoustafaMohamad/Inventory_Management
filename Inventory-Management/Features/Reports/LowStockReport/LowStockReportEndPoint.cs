@@ -20,9 +20,9 @@ namespace Inventory_Management.Features.Reports.LowStockReport
         }
         [HttpGet("{category}")]
         [Authorize]
-        public async Task<IActionResult> GetLowStockProductsReportAsync(Category category)
+        public async Task<IActionResult> GetLowStockProductsReportAsync(int categoryID)
         {
-            var result = await _mediator.Send(new LowStockReportQuery(category));
+            var result = await _mediator.Send(new LowStockReportQuery(categoryID));
 
             if (!result.IsSuccess)
             {
