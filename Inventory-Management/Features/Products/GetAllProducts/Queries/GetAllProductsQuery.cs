@@ -21,17 +21,20 @@ namespace Inventory_Management.Features.Products.GetAllProducts.Queries
         {
             var productsQuery = await _repository.GetAll();
             var queryParams = request.queryParams;
-            var productCount = productsQuery.Count();
+            
 
             productsQuery = productsQuery
-                .Where(p => string.IsNullOrEmpty(queryParams.Name) || p.Name == queryParams.Name)
+                .Where(p => string.IsNullOrEmpty(queryParams.Name) || p.Name.Contains(queryParams.Name))
                 .Where(p => request.queryParams.Available == null || p.Available == queryParams.Available);
+
+            var productCount = productsQuery.Count();
 
             var pageSize = queryParams.PageSize != 0 ? queryParams.PageSize : 5;
             var pageNumber = queryParams.PageNumbar != 0 ? queryParams.PageNumbar : 1;
 
             var skipNumber = (pageNumber - 1) * pageSize;
             productsQuery = productsQuery.Skip(skipNumber).Take(pageSize);
+
             if (!productsQuery.Any())
             {
                 return ResultDto< PaginationResponse < ProductDto >>.Faliure(ErrorCode.NoProductsFound, "No products Found");
