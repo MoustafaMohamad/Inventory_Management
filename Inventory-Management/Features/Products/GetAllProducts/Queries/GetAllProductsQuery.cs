@@ -8,7 +8,9 @@ using MediatR;
 
 namespace Inventory_Management.Features.Products.GetAllProducts.Queries
 {
+
     public record GetAllProductsQuery(QueryObject queryParams) : IRequest<ResultDto<PaginationResponse<ProductDto>>>;
+
 
     public class GetAllProductsQueryHandler : BaseRequestHandler<Product, GetAllProductsQuery, ResultDto<PaginationResponse<ProductDto>>> 
     {
@@ -21,6 +23,7 @@ namespace Inventory_Management.Features.Products.GetAllProducts.Queries
         {
             var productsQuery = await _repository.GetAll();
             var queryParams = request.queryParams;
+
             
 
             productsQuery = productsQuery
@@ -48,6 +51,7 @@ namespace Inventory_Management.Features.Products.GetAllProducts.Queries
             };
 
             return ResultDto<PaginationResponse<ProductDto>>.Sucess(response);
+
         }
     }
 }
