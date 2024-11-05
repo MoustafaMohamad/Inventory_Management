@@ -11,6 +11,8 @@ namespace Inventory_Management.Common.Repositories
         void Delete(int id);
 
         T GetByID(int id);
+        Task<IQueryable<TResult>> GetAllWithProjectTo<TResult>(Expression<Func<T, bool>> predicate);
+        Task<TResult> GetByIDWithProjection<TResult>(Expression<Func<T, bool>> predicate);
         Task<T> FirstAsync(Expression<Func<T, bool>> predicate);
         Task<IQueryable<T>> GetAll();
        Task< IQueryable<T>> Get(Expression<Func<T, bool>> predicate);

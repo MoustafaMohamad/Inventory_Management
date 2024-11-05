@@ -18,19 +18,18 @@ namespace Inventory_Management.Common.Profiles
         {
             CreateMap<AddProductEndPointRequest, AddProductCommand>();
             CreateMap<AddProductCommand, Product>();
-            CreateMap<Product, ProductDto>().ReverseMap();
-            CreateMap<ProductDto, GetProductByIdEndPointResponse>()
-                .ForMember(dst => dst.Category,
-                opt => opt.MapFrom(src => src.Category.ToString()))
-                .ForMember(dst => dst.Available,
-                opt => opt.MapFrom(src => src.Available.ToString()));
-            CreateMap<ProductDto, GetAllProductsEndPointResponse>().ForMember(dst => dst.Category,
-                opt => opt.MapFrom(src => src.Category.ToString()))
-                .ForMember(dst => dst.Available,
-                opt => opt.MapFrom(src => src.Available.ToString()));
+
+            CreateMap<ProductDto, Product>();
+            CreateMap<ProductDto, GetProductByIdEndPointResponse>();
+                //.ForMember(dst => dst.Available,
+                //opt => opt.MapFrom(src => src.Available.ToString()));
+            CreateMap<ProductDto, GetAllProductsEndPointResponse>();
+               
             CreateMap<UpdateProductEndPointRequest, UpdateProductCommand>();
             CreateMap<UpdateProductCommand, Product>();
-            CreateMap<Product, ProductDto>();
+            CreateMap<Product, ProductDto>().ForMember(dst => dst.CategoryName,
+                opt => opt.MapFrom(src => src.Category.Name)) .ForMember(dst => dst.Available,
+                opt => opt.MapFrom(src => src.Available.ToString()));
             CreateMap<ProductDto, ProductReportDto>();
             CreateMap<ProductReportDto, LowStockReportEndPointResponse>();
         }

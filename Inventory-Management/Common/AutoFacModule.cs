@@ -30,6 +30,7 @@ namespace Common
             builder.RegisterType<RequestParameters<OtpVerification>>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<RequestParameters<Product>>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<RequestParameters<InventoryTransaction>>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<RequestParameters<Category>>().AsSelf().InstancePerLifetimeScope();
 
             builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>)).InstancePerLifetimeScope();
 
@@ -43,8 +44,6 @@ namespace Common
             builder.RegisterType<ForgetPasswordValidator>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<ChangePasswordValidator>().AsSelf().InstancePerLifetimeScope();
             builder.RegisterType<ResetpasswordValidator>().AsSelf().InstancePerLifetimeScope();
-
-
         }
     }
 }

@@ -20,14 +20,14 @@ namespace Inventory_Management.Features.Products.GetProductDetails.Queries
 
         public async override Task<ResultDto<ProductDto>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
-            var product = _repository.GetByID(request.id);
+            var product = await  _repository.GetByIDWithProjection<ProductDto>(p => p.ID == request.id);//   GetByID(request.id).MapOne<ProductDto>();
 
             if (product is null)
             {
                throw new BusinessException(ErrorCode.InvalidProductID, "Product is Not Found");
             }
            
-            return ResultDto<ProductDto>.Sucess(product.MapOne<ProductDto>());
+            return ResultDto<ProductDto>.Sucess(product);
         }
     }
 }
