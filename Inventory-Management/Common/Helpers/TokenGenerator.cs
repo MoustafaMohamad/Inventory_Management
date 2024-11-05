@@ -24,7 +24,7 @@ namespace Inventory_Management.Common.Helpers
                     new Claim("RoleID", user.RoleID.ToString()),
                     new Claim("Email", user.Email)
                              }),
-                    Expires = DateTime.UtcNow.AddMinutes(90),
+                    Expires = DateTime.UtcNow.AddHours(24),
                     Issuer = Environment.GetEnvironmentVariable("ISSUER"),
                     Audience = Environment.GetEnvironmentVariable("AUDIENCE"),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

@@ -22,7 +22,7 @@ namespace Inventory_Management.Features.Products.AddProduct
            _productValidator = productValidator;
         }
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> AddProductAsync([FromForm] AddProductEndPointRequest request)
         {
             #region Validation

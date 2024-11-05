@@ -1,4 +1,6 @@
-﻿using Inventory_Management.Data;
+﻿using AutoMapper.QueryableExtensions;
+using Common.Helpers;
+using Inventory_Management.Data;
 using Inventory_Management.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -55,6 +57,17 @@ namespace Inventory_Management.Common.Repositories
         {
             return _context.Set<T>().Where(e => !e.IsDeleted);
         }
+        public async Task<IQueryable<TResult>> GetAllWithProjectTo<TResult>(Expression<Func<T, bool>> predicate)
+        {
+            return _context.Set<T>().Where(e => !e.IsDeleted).Where(predicate).Map<TResult>();
+        }
+
+        public async Task<TResult> GetByIDWithProjection<TResult>(Expression<Func<T, bool>> predicate)
+        {
+            var entities = await GetAllWithProjectTo<TResult>(predicate);
+            return await entities.FirstOrDefaultAsync();
+        }
+
 
         public T GetByID(int id)
         {
