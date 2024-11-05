@@ -18,7 +18,8 @@ namespace Inventory_Management.Features.Reports.LowStockReport
         {
             _mediator = mediator;
         }
-        [HttpGet("{category}")]
+        //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VyTmFtZSI6Im1hcndhIGFkZWwiLCJSb2xlSUQiOiI3IiwiRW1haWwiOiJtYXJ3YS5hc205NUBnbWFpbC5jb20iLCJuYmYiOjE3MzA4MjM3MDUsImV4cCI6MTczMDkxMDEwNCwiaWF0IjoxNzMwODIzNzA1LCJpc3MiOiJGb29kQXBwbGljYXRpb24iLCJhdWQiOiJGb29kQXBwbGljYXRpb25Vc2VycyJ9.LZbdgZJHcxrBx58evc4wp_a9elRaW8gF08gLCNZHtIs
+        [HttpGet("{categoryID}")]
         [Authorize]
         public async Task<IActionResult> GetLowStockProductsReportAsync(int categoryID)
         {
