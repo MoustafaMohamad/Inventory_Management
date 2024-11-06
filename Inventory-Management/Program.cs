@@ -41,7 +41,7 @@ namespace Inventory_Management
             #region Swagger Bearer
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Food App Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Inventory App Api", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. " +
@@ -115,10 +115,10 @@ namespace Inventory_Management
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
-                        ValidIssuer = Environment.GetEnvironmentVariable("ISSUER"),
-                        ValidAudience = Environment.GetEnvironmentVariable("AUDIENCE"),
+                        ValidIssuer = builder.Configuration.GetSection("JwtSettings:ISSUER").Value,//Environment.GetEnvironmentVariable("ISSUER"),
+                        ValidAudience = builder.Configuration.GetSection("JwtSettings:AUDIENCE").Value,//Environment.GetEnvironmentVariable("AUDIENCE"),
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("SECRET_KEY")))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtSettings:SECRET_KEY").Value))
                     };
                 });
             #endregion
@@ -135,6 +135,11 @@ namespace Inventory_Management
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
+
+            app.UseCors(builder => builder.AllowAnyOrigin()
+                              .AllowAnyHeader()
+                              .AllowAnyMethod());
+
             app.UseMiddleware<GlobalErrorHandlerMiddleware>();
             app.UseMiddleware<TransactionMiddleware>();
             app.UseAuthentication();

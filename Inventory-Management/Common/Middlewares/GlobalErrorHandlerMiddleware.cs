@@ -20,7 +20,7 @@ namespace Inventory_Management.Common.Middlewares
             }
             catch (Exception ex )
             {
-                string message = "Error Occured";
+                string message = $"Error Occured: {ex.Message}.";
                 ErrorCode errorCode = ErrorCode.UnKnown;
                 if (ex is BusinessException businessException)
                 {
