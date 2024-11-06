@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Inventory_Management.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20241103174102_AddCategoryTable")]
+    [Migration("20241106151616_AddCategoryTable")]
     partial class AddCategoryTable
     {
         /// <inheritdoc />
@@ -72,6 +72,38 @@ namespace Inventory_Management.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            IsDeleted = false,
+                            Name = "Snacks & Sweets"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            IsDeleted = false,
+                            Name = "Devices"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            IsDeleted = false,
+                            Name = "Grocery"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            IsDeleted = false,
+                            Name = "Clothes"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            IsDeleted = false,
+                            Name = "Others"
+                        });
                 });
 
             modelBuilder.Entity("Inventory_Management.Entities.InventoryTransaction", b =>
@@ -185,6 +217,68 @@ namespace Inventory_Management.Migrations
                     b.HasIndex("CategoryID");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Available = 0,
+                            CategoryID = 3,
+                            CreatedAt = new DateTime(2024, 11, 6, 15, 16, 15, 926, DateTimeKind.Utc).AddTicks(6477),
+                            ExpiryDate = new DateTime(2025, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "http://res.cloudinary.com/dpapfkrx1/image/upload/v1730568418/maggi-noodles-1000x1000.jpg",
+                            IsDeleted = false,
+                            Name = "Maggi",
+                            Price = 12m,
+                            Quantity = 50,
+                            Threshold = 22,
+                            Unit = "g1"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Available = 0,
+                            CategoryID = 1,
+                            CreatedAt = new DateTime(2024, 11, 6, 15, 16, 15, 926, DateTimeKind.Utc).AddTicks(6482),
+                            ExpiryDate = new DateTime(2025, 11, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "http://res.cloudinary.com/dpapfkrx1/image/upload/v1730568627/6223000508572_-_37g.webp",
+                            IsDeleted = false,
+                            Name = "Tiger",
+                            Price = 7m,
+                            Quantity = 40,
+                            Threshold = 20,
+                            Unit = "g1"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Available = 2,
+                            CategoryID = 5,
+                            CreatedAt = new DateTime(2024, 11, 6, 15, 16, 15, 926, DateTimeKind.Utc).AddTicks(6485),
+                            ExpiryDate = new DateTime(2026, 10, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "http://res.cloudinary.com/dpapfkrx1/image/upload/v1730656198/caregory.jpg",
+                            IsDeleted = false,
+                            Name = "dexdece",
+                            Price = 250m,
+                            Quantity = 7,
+                            Threshold = 5,
+                            Unit = "g1"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Available = 1,
+                            CategoryID = 5,
+                            CreatedAt = new DateTime(2024, 11, 6, 15, 16, 15, 926, DateTimeKind.Utc).AddTicks(6488),
+                            ExpiryDate = new DateTime(2025, 1, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ImageUrl = "http://res.cloudinary.com/dpapfkrx1/image/upload/v1730658274/01d4fdc0e786083bd7002de356fb29c3.jpg",
+                            IsDeleted = false,
+                            Name = "product2",
+                            Price = 100m,
+                            Quantity = 12,
+                            Threshold = 22,
+                            Unit = "g1"
+                        });
                 });
 
             modelBuilder.Entity("Inventory_Management.Entities.Role", b =>

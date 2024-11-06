@@ -91,7 +91,7 @@ namespace Inventory_Management.Common.Repositories
             _context.Update(entity);
             return entity;
         }
-       
+
         public void UpdateIncluded(T entity, params string[] updatedProperties)
         {
             T local = _context.Set<T>().Local.FirstOrDefault(x => x.ID == entity.ID);
@@ -99,20 +99,21 @@ namespace Inventory_Management.Common.Repositories
             EntityEntry entityEntry;
 
 
+
+
+        }
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate)
         {
             return await _context.Set<T>().FirstOrDefaultAsync(predicate);
         }
 
-        
+
 
         public async Task SaveChangesAsync()
         {
-         await  _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
-        
-    }
 
-        
     }
+}
