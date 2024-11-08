@@ -33,7 +33,7 @@ namespace Inventory_Management.Features.Products.GetAllProducts
             var mappedProducts =result.Data.Items.AsQueryable().Map<GetAllProductsEndPointResponse>().ToList();
             var response = new PaginationResponse<GetAllProductsEndPointResponse>
             {
-                TotalNumber = result.Data.TotalNumber,
+                TotalPagesNumber = result.Data.TotalPagesNumber,
                 Items = mappedProducts
             };
 

@@ -33,7 +33,6 @@ namespace Inventory_Management.Features.Products.AddProduct
 
                 foreach (var error in validationResults.Errors)
                 {
-                    Console.WriteLine(error.ErrorCode);
                     ErrorCode errorCode = (ErrorCode)Enum.Parse(typeof(ErrorCode), error.ErrorCode);
                     throw new BusinessException(errorCode, error.ErrorMessage);
                 }

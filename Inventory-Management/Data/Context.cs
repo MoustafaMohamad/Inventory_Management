@@ -34,8 +34,8 @@ namespace Inventory_Management.Data
                 .LogTo(log => Debug.WriteLine(log), LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
+  
 
-        
-        
+
     }
 }

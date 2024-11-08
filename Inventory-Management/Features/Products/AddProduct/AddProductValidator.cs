@@ -1,14 +1,9 @@
 ﻿using FluentValidation;
 using Inventory_Management.Common.Exceptions;
-using Inventory_Management.Common.Helpers;
-using Inventory_Management.Entities;
-using Inventory_Management.Features.Products.AddProduct.Commands;
-using Inventory_Management.Features.Users.RegisterUser.Commands;
-using System;
 
 namespace Inventory_Management.Features.Products.AddProduct
 {
-  
+
     public class AddProductValidator : AbstractValidator<AddProductEndPointRequest>
     {
         public AddProductValidator()
