@@ -6,6 +6,7 @@ using AutoMapper;
 using Common;
 using Common.Helpers;
 using DotNetEnv;
+using Inventory_Management.Common.Helpers;
 using Inventory_Management.Common.Middlewares;
 using Inventory_Management.Common.Profiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,13 +36,15 @@ namespace Inventory_Management
 
                 });
 
-
+            builder.Services.AddSignalR();
+          
+         
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             #region Swagger Bearer
             builder.Services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Food App Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Inventory App Api", Version = "v1" });
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
                     Description = "JWT Authorization header using the Bearer scheme. " +
@@ -115,10 +118,10 @@ namespace Inventory_Management
                         ValidateIssuer = true,
                         ValidateAudience = true,
                         ValidateLifetime = true,
-                        ValidIssuer = Environment.GetEnvironmentVariable("ISSUER"),
-                        ValidAudience = Environment.GetEnvironmentVariable("AUDIENCE"),
+                        ValidIssuer = builder.Configuration.GetSection("JwtSettings:ISSUER").Value,//Environment.GetEnvironmentVariable("ISSUER"),
+                        ValidAudience = builder.Configuration.GetSection("JwtSettings:AUDIENCE").Value,//Environment.GetEnvironmentVariable("AUDIENCE"),
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("SECRET_KEY")))
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration.GetSection("JwtSettings:SECRET_KEY").Value))
                     };
                 });
             #endregion
@@ -135,6 +138,11 @@ namespace Inventory_Management
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
+            app.MapHub <SingleRNotificationHub>("/Notificationhub");
+            app.UseCors(builder => builder.AllowAnyOrigin()
+                              .AllowAnyHeader()
+                              .AllowAnyMethod());
+
             app.UseMiddleware<GlobalErrorHandlerMiddleware>();
             app.UseMiddleware<TransactionMiddleware>();
             app.UseAuthentication();

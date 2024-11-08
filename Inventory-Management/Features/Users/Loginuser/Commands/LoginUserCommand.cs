@@ -9,9 +9,11 @@ namespace Inventory_Management.Features.Users.Loginuser.Commands
     public record LoginUserCommand(string Email,string Password):IRequest<ResultDto<string>>;
     public class LoginUserCommandHandler : BaseRequestHandler<User, LoginUserCommand, ResultDto<string>>
     {
-        public LoginUserCommandHandler(RequestParameters<User> requestParameters) : base(requestParameters)
+        private readonly IConfiguration _config;
+
+        public LoginUserCommandHandler(RequestParameters<User> requestParameters, IConfiguration config) : base(requestParameters)
         {
-            
+            _config = config;
         }
         public async override Task<ResultDto<string>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
@@ -24,7 +26,7 @@ namespace Inventory_Management.Features.Users.Loginuser.Commands
             user.LastLogin = DateTime.UtcNow;
              _repository.Update(user);
             await _repository.SaveChanges();
-            var token = await TokenGenerator.GenerateToken(user);
+            var token = await TokenGenerator.GenerateToken(user, _config);
             if (!token.IsSuccess)
             {
                 return ResultDto<string>.Faliure(token.ErrorCode, token.Message);

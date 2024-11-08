@@ -24,6 +24,8 @@ namespace Inventory_Management.Features.Products.GetAllProducts.Queries
             var productsQuery = await _repository.GetAll();
             var queryParams = request.queryParams;
 
+            
+
             productsQuery = productsQuery
                 .Where(p => string.IsNullOrEmpty(queryParams.Name) || p.Name.Contains(queryParams.Name))
                 .Where(p => request.queryParams.Available == null || p.Available == queryParams.Available);
