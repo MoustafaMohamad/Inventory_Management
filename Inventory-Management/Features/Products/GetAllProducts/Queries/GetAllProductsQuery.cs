@@ -33,8 +33,10 @@ namespace Inventory_Management.Features.Products.GetAllProducts.Queries
             var productCount = productsQuery.Count();
 
             var pageSize = queryParams.PageSize != 0 ? queryParams.PageSize : 5;
+
             var pageNumber = queryParams.PageNumbar != 0 ? queryParams.PageNumbar : 1;
 
+            var totalPagesNumbers = productCount % pageSize ==0 ?productCount / pageSize : (productCount / pageSize)+1;
             var skipNumber = (pageNumber - 1) * pageSize;
             productsQuery = productsQuery.Skip(skipNumber).Take(pageSize);
 
@@ -46,7 +48,7 @@ namespace Inventory_Management.Features.Products.GetAllProducts.Queries
 
             var response = new PaginationResponse<ProductDto>
             {
-                TotalNumber = productCount,
+                TotalPagesNumber = totalPagesNumbers,
                 Items = productsDto
             };
 

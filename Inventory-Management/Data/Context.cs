@@ -43,15 +43,15 @@ namespace Inventory_Management.Data
         {
             
             optionsBuilder.UseSqlServer(
-                "Data Source=SQL9001.site4now.net;Initial Catalog=db_aaeba0_env00;User Id=db_aaeba0_env00_admin;Password=Apis_Ups2024"
+                //"Data Source=SQL9001.site4now.net;Initial Catalog=db_aaeba0_env00;User Id=db_aaeba0_env00_admin;Password=Apis_Ups2024"
                 // "Server=DESKTOP-GBMV023\\MSSQLSERVER2022;Database=Inventory_Management_System;Trusted_Connection=True;Encrypt=False;"
-                 //"Server =MSI\\SQLEXPRESS; Database = Inventory_Management; Trusted_Connection = True; TrustServerCertificate = True;"
+                 "Server =MSI\\SQLEXPRESS; Database = Inventory_Management; Trusted_Connection = True; TrustServerCertificate = True;"
                 )
                 .LogTo(log => Debug.WriteLine(log), LogLevel.Information)
                 .EnableSensitiveDataLogging();
         }
+  
 
-        
-        
+
     }
 }

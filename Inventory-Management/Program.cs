@@ -6,6 +6,7 @@ using AutoMapper;
 using Common;
 using Common.Helpers;
 using DotNetEnv;
+using Inventory_Management.Common.Helpers;
 using Inventory_Management.Common.Middlewares;
 using Inventory_Management.Common.Profiles;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -35,7 +36,9 @@ namespace Inventory_Management
 
                 });
 
-
+            builder.Services.AddSignalR();
+          
+         
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             #region Swagger Bearer
@@ -135,7 +138,7 @@ namespace Inventory_Management
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
-
+            app.MapHub <SingleRNotificationHub>("/Notificationhub");
             app.UseCors(builder => builder.AllowAnyOrigin()
                               .AllowAnyHeader()
                               .AllowAnyMethod());

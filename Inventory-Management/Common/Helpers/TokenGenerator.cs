@@ -24,9 +24,9 @@ namespace Inventory_Management.Common.Helpers
                     new Claim("RoleID", user.RoleID.ToString()),
                     new Claim("Email", user.Email)
                              }),
-                    Expires = DateTime.UtcNow.AddMinutes(90),
-                    Issuer = config.GetSection("JwtSettings:ISSUER").Value,
-                    Audience = config.GetSection("JwtSettings:Audience").Value,
+                    Expires = DateTime.UtcNow.AddHours(24),
+                    Issuer = Environment.GetEnvironmentVariable("ISSUER"),
+                    Audience = Environment.GetEnvironmentVariable("AUDIENCE"),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                 };
                 var token = tokenHandler.CreateToken(tokenDescriptor);
