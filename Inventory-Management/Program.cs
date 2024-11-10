@@ -138,7 +138,7 @@ namespace Inventory_Management
             app.UseSwagger();
             app.UseSwaggerUI();
             app.UseHttpsRedirection();
-            app.MapHub <SingleRNotificationHub>("/Notificationhub");
+            app.MapHub <SignaleRNotificationHub>("/Notificationhub");
             app.UseCors(builder => builder.AllowAnyOrigin()
                               .AllowAnyHeader()
                               .AllowAnyMethod());

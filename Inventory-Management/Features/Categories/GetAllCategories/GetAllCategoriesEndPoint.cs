@@ -19,8 +19,8 @@ namespace Inventory_Management.Features.Categories.GetAllCategories
     public class GetAllCategoriesEndPoint:ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly IHubContext<SingleRNotificationHub> _hubContext;
-        public GetAllCategoriesEndPoint(IMediator mediator, IHubContext<SingleRNotificationHub> hubContext)
+        private readonly IHubContext<SignaleRNotificationHub> _hubContext;
+        public GetAllCategoriesEndPoint(IMediator mediator, IHubContext<SignaleRNotificationHub> hubContext)
         {
             _mediator = mediator;
             _hubContext = hubContext;
@@ -36,7 +36,7 @@ namespace Inventory_Management.Features.Categories.GetAllCategories
                 throw new BusinessException(result.ErrorCode, result.Message);
             }
             var mappedCategories = result.Data.AsQueryable().Map<GetAllCategoriesEndPointResponse>().ToList();
-            await _hubContext.Clients.All.SendAsync("LowStockMessage", 10, "Product one", 15);
+            await _hubContext.Clients.All.SendAsync("LowStockMessage","user","message");
 
             return Ok(ResultViewModel.Sucess(mappedCategories));
         }

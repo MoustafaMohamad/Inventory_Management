@@ -32,7 +32,7 @@ namespace Inventory_Management.Features.Common.Products.Commands
             var updatedProduct = result.Data;
             updatedProduct.Quantity += request.Quantity;
            var entity =  _repository.UpdatewithReturn(updatedProduct);
-            _repository.SaveChanges();
+            await _repository.SaveChanges();
             //int updatedQuantity = result.Data.Quantity+request.Quantity;
             //var updatedProduct= new Product() { ID =request.ProductId , Quantity = updatedQuantity };
 
