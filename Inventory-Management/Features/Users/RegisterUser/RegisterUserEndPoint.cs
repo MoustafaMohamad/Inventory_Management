@@ -9,18 +9,33 @@ namespace Inventory_Management.Features.Users.RegisterUser
 {
 
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/users/register")]
     public class RegisterUserEndPoint : ControllerBase
     {
         private readonly IMediator _mediator;
-
-        public RegisterUserEndPoint(IMediator mediator)
+        private readonly RegisterUserValidator _validator;
+        public RegisterUserEndPoint(IMediator mediator, RegisterUserValidator validator)
         {
             _mediator = mediator;
+            _validator = validator;
         }
         [HttpPost]
         public async Task<IActionResult> RegisterUserAsync([FromBody] RegisterUserEndPointRequest request)
         {
+            #region Validation
+            var validationResults = _validator.Validate(request);
+
+            if (!validationResults.IsValid)
+            {
+
+                foreach (var error in validationResults.Errors)
+                {
+                    Console.WriteLine(error.ErrorCode);
+                    ErrorCode errorCode = (ErrorCode)Enum.Parse(typeof(ErrorCode), error.ErrorCode);
+                    throw new BusinessException(errorCode, error.ErrorMessage);
+                }
+            }
+            #endregion 
             var result = await _mediator.Send(request.MapOne<RegisterUserCommand>());
             if (!result.IsSuccess)
             {

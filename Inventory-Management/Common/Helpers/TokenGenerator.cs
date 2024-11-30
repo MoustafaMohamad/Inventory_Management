@@ -9,10 +9,10 @@ namespace Inventory_Management.Common.Helpers
 {
     public static class TokenGenerator
     {
-        public static async Task<ResultDto<string>> GenerateToken(User user)
+        public static async Task<ResultDto<string>> GenerateToken(User user, IConfiguration config)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("SECRET_KEY"));
+            var key = Encoding.ASCII.GetBytes(config.GetSection("JwtSettings:SECRET_KEY").Value);
             try
             {
                 var tokenDescriptor = new SecurityTokenDescriptor
@@ -24,7 +24,7 @@ namespace Inventory_Management.Common.Helpers
                     new Claim("RoleID", user.RoleID.ToString()),
                     new Claim("Email", user.Email)
                              }),
-                    Expires = DateTime.UtcNow.AddMinutes(90),
+                    Expires = DateTime.UtcNow.AddHours(24),
                     Issuer = Environment.GetEnvironmentVariable("ISSUER"),
                     Audience = Environment.GetEnvironmentVariable("AUDIENCE"),
                     SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -37,11 +37,6 @@ namespace Inventory_Management.Common.Helpers
             {
                 return ResultDto<string>.Faliure(ErrorCode.UnableTogenerateToken, "Unable to Create Token");
             }
-
-
-
-
-
         }
     }
 }

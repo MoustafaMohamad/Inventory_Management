@@ -5,15 +5,22 @@ namespace Inventory_Management.Common.Repositories
 {
     public interface IRepository<T> where T : BaseModel 
     {
-        Task AddAsync(T entity); 
-        Task Update(T entity);
+        Task<T> AddAsync(T entity);
+        void Update(T entity);
         void Delete(T entity);
         void Delete(int id);
-        T GetById(int id);
-        Task<T> First(Expression<Func<T, bool>> predicate);
+
+        T GetByID(int id);
+        Task<IQueryable<TResult>> GetAllWithProjectTo<TResult>(Expression<Func<T, bool>> predicate);
+        Task<TResult> GetByIDWithProjection<TResult>(Expression<Func<T, bool>> predicate);
+        Task<T> FirstAsync(Expression<Func<T, bool>> predicate);
         Task<IQueryable<T>> GetAll();
-        IQueryable<T> Get(Expression<Func<T, bool>> predicate);
-        bool Any(Expression<Func<T, bool>> predicate);
+       Task< IQueryable<T>> Get(Expression<Func<T, bool>> predicate);
+        Task<bool> AnyAsync(Expression<Func<T, bool>> predicate);
         Task SaveChanges();
+        Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> predicate);
+        void UpdateIncluded(T entity, params string[] updatedProperties);
+        T UpdatewithReturn(T entity);
+        Task SaveChangesAsync(); 
     }
 }
